@@ -151,7 +151,7 @@ if(lastRow > 0) {
 
 	if(currentPage > 1) {
 %>
-		<a href="listboard.jsp?pageNum=<%=currentPage-1%>">[이전]</a>	
+		<a href="newjsp.jsp?pageNum=<%=currentPage-1%>">[이전]</a>	
 <%	
 	}
 	for(i=setPage; i<=lastPage; i++) {
@@ -161,13 +161,13 @@ if(lastRow > 0) {
 <%		
 		}else{
 %>
-		<a href="listboard.jsp?pageNum=<%=i%>">[<%=i%>]</a>
+		<a href="newjsp.jsp?pageNum=<%=i%>">[<%=i%>]</a>
 <%
 		}
 	}
 	if(lastPage > currentPage) {
 %>
-		<a href="listboard.jsp?pageNum=<%=currentPage+1%>">[다음]</a>
+		<a href="newjsp.jsp?pageNum=<%=currentPage+1%>">[다음]</a>
 <%
 	}
 }
@@ -184,7 +184,7 @@ if(lastRow > 0) {
 	<TR>
 		<TD align='center'>	
 			<TABLE border='0' cellpadding='0' cellspacing='0'>
-			<FORM Name='Form' Method='POST' Action='listboard.jsp' OnSubmit='return Check()'>
+			<FORM Name='Form' Method='POST' Action='newjsp.jsp' OnSubmit='return Check()'>
 			<input type='hidden' name='search' value='1'>
 			<TR>
 				<TD align='right'>

@@ -32,6 +32,9 @@
     <BODY>
 
         <%
+            String key = request.getParameter("key");
+            String keyword = request.getParameter("keyword");
+
             String pageNum = request.getParameter("pageNum");
             if (pageNum == null) {
                 pageNum = "1";
@@ -42,9 +45,14 @@
             int startRow = (currentPage - 1) * listSize + 1;
             int endRow = currentPage * listSize;
             int lastRow = 0;
+            List list = null;
 
             ModelDao dao = new ModelDaoFactory().modelDao();
-            lastRow = dao.getLastRow();
+            if (key == null || keyword == null) {
+                  lastRow = dao.getLastRow();
+            } else {
+                lastRow = dao.keyLastRow(key, keyword);
+            }
         %>
 
     <center><font size='3'><b> 게시판 </b></font></TD>
@@ -66,30 +74,39 @@
         <TD><font size=2><center><b>조회</b></center></font></TD>      
         </TR>   
 
-        <%
-            if (lastRow > 0) {
+        <%            if (lastRow > 0) {
+                if (key == null || keyword == null) {
+                    list = dao.getDBAll(startRow, endRow);
+                } else {
+                    list = dao.getKeyDBAll(key, keyword);
+                }
 
-                List list = dao.getDBAll(startRow, endRow);
                 Iterator it = list.iterator();
                 Model bean;
                 while (it.hasNext()) {
                     bean = (Model) it.next();
+                    int listnum = bean.getNum();
+                    String name = bean.getName();
+                    String email = bean.getEmail();
+                    String title = bean.getTitle();
+                    String writedate = bean.getWritedate();
+                    int readcount = bean.getReadcount();
         %>
 
         <TR bgcolor='ededed'>     
             <TD align=center><font size=2 color='black'>
-                <%=bean.getNum()%></font></TD>     
+                <%=listnum%></font></TD>     
             <TD align=left>
-                <a href="write_output.jsp?num=<%=bean.getNum()%>">
-                    <font size=2 color="black"><%=bean.getTitle()%></font></a>
+                <a href="write_output.jsp?num=<%=listnum%>">
+                    <font size=2 color="black"><%=title%></font></a>
             </TD>
             <TD align=center>    
-                <a href="<%=bean.getEmail()%>">
-                    <font size=2 color="black"><%=bean.getName()%></font></a>     
+                <a href="<%=email%>">
+                    <font size=2 color="black"><%=name%></font></a>     
             </TD>     
-            <TD align=center><font size=2><%=bean.getWritedate()%></font>
+            <TD align=center><font size=2><%=writedate%></font>
             </TD>     
-            <TD align=center><font size=2><%=bean.getReadcount()%></font>     
+            <TD align=center><font size=2><%=readcount%></font>     
         </TR>  
 
         <%

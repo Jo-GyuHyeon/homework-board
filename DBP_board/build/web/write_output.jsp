@@ -26,7 +26,11 @@ String num = request.getParameter("num");
 
 ModelDao dao = new ModelDaoFactory().modelDao();
 Model model = dao.getModel(num);
-
+String name = model.getName();
+String title = model.getTitle();
+String contents = model.getContents().trim();
+String writedate = model.getWritedate();
+int readcount = model.getReadcount();
 %>
 
 <center><font size='3'><b> 게시판 </b></font>
@@ -41,11 +45,11 @@ Model model = dao.getModel(num);
 <TABLE border='0' width='600'>
 	<TR>
     		<TD align='left'>
-      		<font size='2'> 작성자 : <%=model.getName()%></font>
+      		<font size='2'> 작성자 : <%=name%></font>
     		</TD>
     		
     		<TD align=right>
-      		<font size='2'>작성일: <%=model.getWritedate()%>, 조회수: <%=model.getReadcount()%></font>
+      		<font size='2'>작성일: <%=writedate%>, 조회수: <%=readcount%></font>
     		</TD>
     	</TR>
 </TABLE>
@@ -53,14 +57,14 @@ Model model = dao.getModel(num);
 <TABLE border='0' cellspacing=3 cellpadding=3 width='600'>
 	<TR bgcolor='cccccc'>
 		<TD align='center'>
-    		<font size='3'><b><%=model.getTitle() %></font>
+    		<font size='3'><b><%=title %></font>
 		</TD>
 	</TR>
 </TABLE>
 
 <TABLE border='0' cellspacing=5 cellpadding=10 width='600'>
 	<TR bgcolor='ededed'>
-		<TD><font size='2' color=''><%=model.getContents()%></font>
+		<TD><font size='2' color=''><%=contents%></font>
 		</TD>
 	</TR>
 </TABLE>
