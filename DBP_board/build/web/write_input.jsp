@@ -5,17 +5,16 @@
 
 <%
 
+    Article model = new Article();
+    ArticleDao dao = new ArticleDaoFactory().modelDao();
 
-Model model = new Model();
-ModelDao dao = new ModelDaoFactory().modelDao();
+    model.setName(request.getParameter("name"));
+    model.setPass(request.getParameter("pass"));
+    model.setEmail(request.getParameter("email"));
+    model.setTitle(request.getParameter("title"));
+    model.setContents(request.getParameter("contents"));
 
-model.setName(request.getParameter("name"));
-model.setPass(request.getParameter("pass"));
-model.setEmail(request.getParameter("email"));
-model.setTitle(request.getParameter("title"));
-model.setContents(request.getParameter("contents"));
+    dao.write(model);
 
-dao.write(model);
-
-response.sendRedirect("listboard.jsp"); 
+    response.sendRedirect("./listboard.jsp");
 %>

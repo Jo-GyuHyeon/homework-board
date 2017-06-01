@@ -5,6 +5,7 @@
 <%@ page import = "bean.*" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 
+<!DOCTYPE html>
 <HTML>
     <HEAD>
         <TITLE> 게시판 </TITLE>
@@ -47,12 +48,13 @@
             int lastRow = 0;
             List list = null;
 
-            ModelDao dao = new ModelDaoFactory().modelDao();
-            if (key == null || keyword == null) {
-                  lastRow = dao.getLastRow();
-            } else {
-                lastRow = dao.keyLastRow(key, keyword);
-            }
+            ArticleDao dao = new ArticleDaoFactory().modelDao();
+            //  if (key == null || keyword == null) {
+            //        lastRow = dao.getLastRow();
+            //  } else {
+            //       lastRow = dao.keyLastRow(key, keyword);
+            //   }
+            lastRow = dao.getSelectLastRow(key, keyword);
         %>
 
     <center><font size='3'><b> 게시판 </b></font></TD>
@@ -75,16 +77,17 @@
         </TR>   
 
         <%            if (lastRow > 0) {
-                if (key == null || keyword == null) {
-                    list = dao.getDBAll(startRow, endRow);
-                } else {
-                    list = dao.getKeyDBAll(key, keyword);
-                }
+                //  if (key == null || keyword == null) {
+                //       list = dao.getDBAll(startRow, endRow);
+                //  } else {
+                //      list = dao.getKeyDBAll(key, keyword);
+                //  }
+                list = dao.getSelectDBAll(startRow, endRow, key, keyword);
 
                 Iterator it = list.iterator();
-                Model bean;
+                Article bean;
                 while (it.hasNext()) {
-                    bean = (Model) it.next();
+                    bean = (Article) it.next();
                     int listnum = bean.getNum();
                     String name = bean.getName();
                     String email = bean.getEmail();
@@ -128,7 +131,7 @@
             </TD>
 
             <TD align='right'>		
-                <a href='write.jsp'>[등록]</a>				
+                <a href='./write.jsp'>[등록]</a>				
             </TD>
         </TR>
     </TABLE>
@@ -147,18 +150,18 @@
 
             if (currentPage > 1) {
     %>
-    <a href="listboard.jsp?pageNum=<%=currentPage - 1%>">[이전]</a>	
+    <a href="./listboard.jsp?pageNum=<%=currentPage - 1%>">[이전]</a>	
     <%
         }
         while (setPage <= lastPage) {
     %>
-    <a href="listboard.jsp?pageNum=<%=setPage%>">[<%=setPage%>]</a>
+    <a href="./listboard.jsp?pageNum=<%=setPage%>">[<%=setPage%>]</a>
     <%
             setPage = setPage + 1;
         }
         if (lastPage > currentPage) {
     %>
-    <a href="listboard.jsp?pageNum=<%=currentPage + 1%>">[다음]</a>
+    <a href="./listboard.jsp?pageNum=<%=currentPage + 1%>">[다음]</a>
     <%
             }
         }
@@ -174,7 +177,7 @@
         <TR>
             <TD align='center'>	
                 <TABLE border='0' cellpadding='0' cellspacing='0'>
-                    <FORM Name='Form' Method='POST' Action='listboard.jsp' OnSubmit='return Check()'>
+                    <FORM Name='Form' Method='POST' Action='listboard.jsp' method = 'post' OnSubmit='return Check()'>
                         <input type='hidden' name='search' value='1'>
                         <TR>
                             <TD align='right'>
@@ -198,7 +201,7 @@
             </TD>
 
             <TD align='right'>		
-                <a href='write.jsp'>[등록]</a>				
+                <a href='./write.jsp'>[등록]</a>				
             </TD>
         </TR>
     </TABLE>  

@@ -51,7 +51,7 @@ String num = request.getParameter("num");
  	</TR>
 </TABLE>                    
 
-<center><a href='listboard.jsp'>[목록 보기]</a></center>      
+<center><a href='./listboard.jsp'>[목록 보기]</a></center>      
 
 </FORM>
 

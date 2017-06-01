@@ -8,33 +8,35 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import bean.Model;
+import bean.Article;
 
-public class ModelDao {
+public class ArticleDao {
 
     private ConnectionMaker connectionMaker;
     private Connection c = null;
     private PreparedStatement ps = null;
+    private PreparedStatement pstmt1 = null, pstmt2 = null;
     private ResultSet rs = null;
     private List list = null;
-    String strSQL = null;
+    private String strSQL = null;
 
-    public ModelDao(ConnectionMaker simpleConnectionMaker) {
+    public ArticleDao(ConnectionMaker simpleConnectionMaker) {
         this.connectionMaker = simpleConnectionMaker;
     }
 
-    public ModelDao() {
+    public ArticleDao() {
     }
 
     public List getDBAll(int startRow, int endRow) throws ClassNotFoundException, SQLException {
         list = new ArrayList();
         c = this.connectionMaker.makeConnection();
-        ps = c.prepareStatement("SELECT * FROM tblboard  WHERE num BETWEEN ? and ?" + "ORDER BY num DESC");
+        strSQL = "SELECT * FROM tblboard  WHERE num BETWEEN ? and ?" + "ORDER BY num DESC";
+        ps = c.prepareStatement(strSQL);
         ps.setInt(1, startRow);
         ps.setInt(2, endRow);
         rs = ps.executeQuery();
         while (rs.next()) {
-            Model model = new Model();
+            Article model = new Article();
             model.setNum(rs.getInt("num"));
             model.setName(rs.getString("name"));
             model.setPass(rs.getString("pass"));
@@ -60,7 +62,40 @@ public class ModelDao {
         ps.setString(1, "%" + keyword + "%");
         rs = ps.executeQuery();
         while (rs.next()) {
-            Model model = new Model();
+            Article model = new Article();
+            model.setNum(rs.getInt("num"));
+            model.setName(rs.getString("name"));
+            model.setPass(rs.getString("pass"));
+            model.setEmail(rs.getString("email"));
+            model.setTitle(rs.getString("title"));
+            model.setContents(rs.getString("contents"));
+            model.setWritedate(rs.getString("writedate"));
+            model.setReadcount(rs.getInt("readcount"));
+            list.add(model);
+        }
+        rs.close();
+        ps.close();
+        c.close();
+        return list;
+
+    }
+
+    public List getSelectDBAll(int startRow, int endRow, String key, String keyword) throws ClassNotFoundException, SQLException {
+        list = new ArrayList();
+        c = this.connectionMaker.makeConnection();
+        if (key == null || keyword == null) {
+            strSQL = "SELECT * FROM tblboard  WHERE num BETWEEN ? and ?" + "ORDER BY num DESC";
+            ps = c.prepareStatement(strSQL);
+            ps.setInt(1, startRow);
+            ps.setInt(2, endRow);
+        } else {
+            strSQL = "SELECT * FROM tblboard WHERE " + key + " like ? ORDER BY num DESC";
+            ps = c.prepareStatement(strSQL);
+            ps.setString(1, "%" + keyword + "%");
+        }
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            Article model = new Article();
             model.setNum(rs.getInt("num"));
             model.setName(rs.getString("name"));
             model.setPass(rs.getString("pass"));
@@ -80,8 +115,9 @@ public class ModelDao {
 
     public int getLastRow() throws ClassNotFoundException, SQLException {
         int num = 0;
+        strSQL = "SELECT * FROM tblboard";
         c = this.connectionMaker.makeConnection();
-        ps = c.prepareStatement("SELECT * FROM tblboard");
+        ps = c.prepareStatement(strSQL);
         rs = ps.executeQuery();
         while (rs.next()) {
             num = rs.getInt("num");
@@ -100,7 +136,7 @@ public class ModelDao {
         strSQL = "SELECT count(*) FROM tblboard WHERE " + key + " like ?";
         c = this.connectionMaker.makeConnection();
         ps = c.prepareStatement(strSQL);
-        ps.setString(1, "%"+keyword+"%");
+        ps.setString(1, "%" + keyword + "%");
         rs = ps.executeQuery();
         while (rs.next()) {
             num = rs.getInt(1);
@@ -113,7 +149,31 @@ public class ModelDao {
         return num;
     }
 
-    public void write(Model model) throws ClassNotFoundException, SQLException {
+    public int getSelectLastRow(String key, String keyword) throws ClassNotFoundException, SQLException {
+        int num = 0;
+        strSQL = null;
+        c = this.connectionMaker.makeConnection();
+        if (key == null || keyword == null) {
+            strSQL = "SELECT count(*) FROM tblboard";
+            ps = c.prepareStatement(strSQL);
+        } else {
+            strSQL = "SELECT count(*) FROM tblboard WHERE " + key + " like ?";
+            ps = c.prepareStatement(strSQL);
+            ps.setString(1, "%" + keyword + "%");
+        }
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            num = rs.getInt(1);
+        }
+
+        rs.close();
+        ps.close();
+        c.close();
+
+        return num;
+    }
+
+    public void write(Article model) throws ClassNotFoundException, SQLException {
 
         Calendar dateIn = Calendar.getInstance();
         String indate = Integer.toString(dateIn.get(Calendar.YEAR)) + "-";
@@ -153,7 +213,7 @@ public class ModelDao {
         c.close();
     }
 
-    public void update(Model model) throws ClassNotFoundException, SQLException {
+    public void reply(Article model) throws ClassNotFoundException, SQLException {
 
         Calendar dateIn = Calendar.getInstance();
         String indate = Integer.toString(dateIn.get(Calendar.YEAR)) + "-";
@@ -165,8 +225,43 @@ public class ModelDao {
 
         c = this.connectionMaker.makeConnection();
 
-        ps = c.prepareStatement(
-                "UPDATE tblboard SET name=?, pass=?, email=?, title=?, contents=?, writedate=? WHERE num=?");
+        strSQL = "UPDATE tblboard SET num = num + 1 WHERE num = " + model.getNum() + " OR num > " + model.getNum();
+        System.out.print(model.getNum());
+        pstmt1 = c.prepareStatement(strSQL);
+        pstmt1.executeUpdate();
+
+        strSQL = "INSERT INTO tblboard(num, name, pass, email, title, contents, writedate, readcount)";
+        strSQL = strSQL + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        pstmt2 = c.prepareStatement(strSQL);
+        pstmt2.setInt(1, model.getNum());
+        pstmt2.setString(2, model.getName());
+        pstmt2.setString(3, model.getPass());
+        pstmt2.setString(4, model.getEmail());
+        pstmt2.setString(5, model.getTitle());
+        pstmt2.setString(6, model.getContents());
+        pstmt2.setString(7, indate);
+        pstmt2.setInt(8, 0);
+        pstmt2.executeUpdate();
+        
+        pstmt1.close();
+        pstmt2.close();
+        c.close();
+    }
+   
+
+    public void update(Article model) throws ClassNotFoundException, SQLException {
+        strSQL = "UPDATE tblboard SET name=?, pass=?, email=?, title=?, contents=?, writedate=? WHERE num=?";
+        Calendar dateIn = Calendar.getInstance();
+        String indate = Integer.toString(dateIn.get(Calendar.YEAR)) + "-";
+        indate = indate + Integer.toString(dateIn.get(Calendar.MONTH) + 1) + "-";
+        indate = indate + Integer.toString(dateIn.get(Calendar.DATE)) + " ";
+        indate = indate + Integer.toString(dateIn.get(Calendar.HOUR_OF_DAY)) + ":";
+        indate = indate + Integer.toString(dateIn.get(Calendar.MINUTE)) + ":";
+        indate = indate + Integer.toString(dateIn.get(Calendar.SECOND));
+
+        c = this.connectionMaker.makeConnection();
+        ps = c.prepareStatement(strSQL);
         ps.setString(1, model.getName());
         ps.setString(2, model.getPass());
         ps.setString(3, model.getEmail());
@@ -180,14 +275,14 @@ public class ModelDao {
         c.close();
     }
 
-    public Model getModel(String num) throws ClassNotFoundException, SQLException {
+    public Article getModel(String num) throws ClassNotFoundException, SQLException {
         strSQL = "SELECT * FROM tblboard WHERE num = ?";
         c = this.connectionMaker.makeConnection();
         ps = c.prepareStatement(strSQL);
         ps.setInt(1, Integer.parseInt(num));
         rs = ps.executeQuery();
         rs.next();
-        Model model = new Model();
+        Article model = new Article();
         model.setNum(rs.getInt("num"));
         model.setName(rs.getString("name"));
         model.setPass(rs.getString("pass"));

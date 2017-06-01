@@ -53,6 +53,7 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
  request.setCharacterEncoding("UTF-8"); 
       out.write("\r\n");
       out.write("\r\n");
+      out.write("<!DOCTYPE html>\r\n");
       out.write("<HTML>\r\n");
       out.write("    <HEAD>\r\n");
       out.write("        <TITLE> 게시판 </TITLE>\r\n");
@@ -97,11 +98,12 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
             List list = null;
 
             ModelDao dao = new ModelDaoFactory().modelDao();
-            if (key == null || keyword == null) {
-                  lastRow = dao.getLastRow();
-            } else {
-                lastRow = dao.keyLastRow(key, keyword);
-            }
+            //  if (key == null || keyword == null) {
+            //        lastRow = dao.getLastRow();
+            //  } else {
+            //       lastRow = dao.keyLastRow(key, keyword);
+            //   }
+            lastRow = dao.getSelectLastRow(key, keyword);
         
       out.write("\r\n");
       out.write("\r\n");
@@ -126,11 +128,12 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\r\n");
       out.write("        ");
             if (lastRow > 0) {
-                if (key == null || keyword == null) {
-                    list = dao.getDBAll(startRow, endRow);
-                } else {
-                    list = dao.getKeyDBAll(key, keyword);
-                }
+                //  if (key == null || keyword == null) {
+                //       list = dao.getDBAll(startRow, endRow);
+                //  } else {
+                //      list = dao.getKeyDBAll(key, keyword);
+                //  }
+                list = dao.getSelectDBAll(startRow, endRow, key, keyword);
 
                 Iterator it = list.iterator();
                 Model bean;
@@ -196,7 +199,7 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            </TD>\r\n");
       out.write("\r\n");
       out.write("            <TD align='right'>\t\t\r\n");
-      out.write("                <a href='write.jsp'>[등록]</a>\t\t\t\t\r\n");
+      out.write("                <a href='./write.jsp'>[등록]</a>\t\t\t\t\r\n");
       out.write("            </TD>\r\n");
       out.write("        </TR>\r\n");
       out.write("    </TABLE>\r\n");
@@ -217,7 +220,7 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
             if (currentPage > 1) {
     
       out.write("\r\n");
-      out.write("    <a href=\"listboard.jsp?pageNum=");
+      out.write("    <a href=\"./listboard.jsp?pageNum=");
       out.print(currentPage - 1);
       out.write("\">[이전]</a>\t\r\n");
       out.write("    ");
@@ -226,7 +229,7 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
         while (setPage <= lastPage) {
     
       out.write("\r\n");
-      out.write("    <a href=\"listboard.jsp?pageNum=");
+      out.write("    <a href=\"./listboard.jsp?pageNum=");
       out.print(setPage);
       out.write("\">[");
       out.print(setPage);
@@ -238,7 +241,7 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
         if (lastPage > currentPage) {
     
       out.write("\r\n");
-      out.write("    <a href=\"listboard.jsp?pageNum=");
+      out.write("    <a href=\"./listboard.jsp?pageNum=");
       out.print(currentPage + 1);
       out.write("\">[다음]</a>\r\n");
       out.write("    ");
@@ -258,7 +261,7 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <TR>\r\n");
       out.write("            <TD align='center'>\t\r\n");
       out.write("                <TABLE border='0' cellpadding='0' cellspacing='0'>\r\n");
-      out.write("                    <FORM Name='Form' Method='POST' Action='listboard.jsp' OnSubmit='return Check()'>\r\n");
+      out.write("                    <FORM Name='Form' Method='POST' Action='listboard.jsp' method = 'post' OnSubmit='return Check()'>\r\n");
       out.write("                        <input type='hidden' name='search' value='1'>\r\n");
       out.write("                        <TR>\r\n");
       out.write("                            <TD align='right'>\r\n");
@@ -282,7 +285,7 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            </TD>\r\n");
       out.write("\r\n");
       out.write("            <TD align='right'>\t\t\r\n");
-      out.write("                <a href='write.jsp'>[등록]</a>\t\t\t\t\r\n");
+      out.write("                <a href='./write.jsp'>[등록]</a>\t\t\t\t\r\n");
       out.write("            </TD>\r\n");
       out.write("        </TR>\r\n");
       out.write("    </TABLE>  \r\n");

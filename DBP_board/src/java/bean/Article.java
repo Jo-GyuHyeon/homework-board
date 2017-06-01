@@ -1,6 +1,6 @@
 package bean;
 
-public class Model {
+public class Article {
 	int num;
 	String name;
 	String pass;
