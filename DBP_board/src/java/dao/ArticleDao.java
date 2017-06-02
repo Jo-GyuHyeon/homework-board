@@ -9,6 +9,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import bean.Article;
+import com.oreilly.servlet.MultipartRequest;
+import java.io.File;
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class ArticleDao {
 
@@ -45,6 +51,7 @@ public class ArticleDao {
             model.setContents(rs.getString("contents"));
             model.setWritedate(rs.getString("writedate"));
             model.setReadcount(rs.getInt("readcount"));
+            model.setFilename(rs.getString("filename"));
             list.add(model);
         }
         rs.close();
@@ -71,6 +78,7 @@ public class ArticleDao {
             model.setContents(rs.getString("contents"));
             model.setWritedate(rs.getString("writedate"));
             model.setReadcount(rs.getInt("readcount"));
+            model.setFilename(rs.getString("filename"));
             list.add(model);
         }
         rs.close();
@@ -104,6 +112,7 @@ public class ArticleDao {
             model.setContents(rs.getString("contents"));
             model.setWritedate(rs.getString("writedate"));
             model.setReadcount(rs.getInt("readcount"));
+            model.setFilename(rs.getString("filename"));
             list.add(model);
         }
         rs.close();
@@ -194,8 +203,8 @@ public class ArticleDao {
             num = rs.getInt(1) + 1;
         }
 
-        strSQL = "INSERT INTO tblboard(num, name, pass, email, title, contents, writedate, readcount)";
-        strSQL = strSQL + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        strSQL = "INSERT INTO tblboard(num, name, pass, email, title, contents, writedate, readcount, filename)";
+        strSQL = strSQL + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         ps = c.prepareStatement(strSQL);
         ps.setInt(1, num);
@@ -206,6 +215,7 @@ public class ArticleDao {
         ps.setString(6, model.getContents());
         ps.setString(7, indate);
         ps.setInt(8, 0);
+        ps.setString(9, model.getFilename());
 
         ps.executeUpdate();
 
@@ -242,8 +252,8 @@ public class ArticleDao {
         pstmt2.setString(6, model.getContents());
         pstmt2.setString(7, indate);
         pstmt2.setInt(8, 0);
+        pstmt2.setString(9, model.getFilename());
         pstmt2.executeUpdate();
-        
         pstmt1.close();
         pstmt2.close();
         c.close();
@@ -291,7 +301,7 @@ public class ArticleDao {
         model.setContents(rs.getString("contents"));
         model.setWritedate(rs.getString("writedate"));
         model.setReadcount(rs.getInt("readcount"));
-
+        model.setFilename(rs.getString("filename"));
         rs.close();
         ps.close();
         c.close();
@@ -343,4 +353,71 @@ public class ArticleDao {
         ps.close();
         c.close();
     }
+    
+    public String controlFileUpload(MultipartRequest multipartRequest){
+        
+        String uploadFileName = "";
+        String originFileName = "";
+        
+        try{
+            uploadFileName = multipartRequest.getFilesystemName("filename");
+            originFileName = multipartRequest.getOriginalFileName("filename");
+            File file = multipartRequest.getFile("filename");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return uploadFileName;
+    }
+    public String getFilename(String num) throws ClassNotFoundException, SQLException{
+        c = this.connectionMaker.makeConnection();
+        strSQL = "select filename from tblboard where num = ?";
+        ps = c.prepareStatement(strSQL);
+        ps.setInt(1, Integer.parseInt(num));
+        rs = ps.executeQuery();
+        rs.next();
+        String filename = rs.getString("filename");
+        return filename;
+    }
+    
+    public String getMailInfo(String num) throws ClassNotFoundException, SQLException{
+        c = this.connectionMaker.makeConnection();
+        strSQL = "SELECT email, title, contents FROM tblboard WHERE num = ?";
+        ps = c.prepareStatement(strSQL);
+        ps.setInt(1, Integer.parseInt(num));
+        rs = ps.executeQuery();
+        rs.next();
+        String mail = rs.getString("email");
+        
+        return mail;
+    }
+    
+    public void sendMail(String from, String to, String title, String contents){
+        try{
+            Properties props = new Properties();
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.auth","true");
+            props.put("mail.smtp.port", "587");  
+
+            Authenticator auth = new GoogleMailAuthentication();
+            Session session= Session.getDefaultInstance(props, auth);
+
+            Message msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress(from));
+            InternetAddress[] address = {new InternetAddress(to)};
+
+            msg.setRecipients(Message.RecipientType.TO, address);
+
+            msg.setSubject(title);
+            msg.setSentDate(new java.util.Date());
+            msg.setContent(contents,"text/html;charset=UTF-8");
+
+            Transport.send(msg);
+
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
 }

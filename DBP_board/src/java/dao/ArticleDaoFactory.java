@@ -9,7 +9,7 @@ public class ArticleDaoFactory {
 	}
 
 	public ConnectionMaker connectionMaker() {
-		ConnectionMaker connectionMaker = new DConnectionMaker();
+		ConnectionMaker connectionMaker = new JGHConnectionMaker();
 		return connectionMaker;
 	}
 }
