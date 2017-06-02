@@ -104,7 +104,7 @@
                     <font size=2 color="black"><%=title%></font></a>
             </TD>
             <TD align=center>    
-                <a href="<%=email%>">
+                <a href="email.jsp?num=<%=listnum%>">
                     <font size=2 color="black"><%=name%></font></a>     
             </TD>     
             <TD align=center><font size=2><%=writedate%></font>

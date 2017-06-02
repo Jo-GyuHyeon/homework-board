@@ -54,7 +54,7 @@
             </TR>
         </TABLE>
 
-        <FORM Name='Write' Action='write_input.jsp' Method='post' OnSubmit='return Check()'>
+        <FORM Name='Write' Action='write_input.jsp' Method='post' enctype="multipart/form-data" OnSubmit='return Check()'>
 
             <TABLE border='0' width='600' cellpadding='2' cellspacing='2'>
                 <TR>
@@ -83,7 +83,16 @@
                     <font size='2'><input type='text' size='40' maxlength='50' name='email'></font>
                 </TD>
                 </TR>
-
+                
+                <TR>
+                    <TD width='100' bgcolor='cccccc'>
+                <font size='2'><center><b>파일전송</b></center></font>
+                </TD>
+                <TD>
+                    <input type="file" name="filename">
+                </TD>
+                </TR>
+                
                 <TR>
                     <TD colspan='2'>
                         <hr size='1' noshade>
