@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DConnectionMaker implements ConnectionMaker {
+public class JGHConnectionMaker implements ConnectionMaker {
 	public Connection makeConnection() throws ClassNotFoundException,
 			SQLException {
 		Class.forName("oracle.jdbc.driver.OracleDriver");

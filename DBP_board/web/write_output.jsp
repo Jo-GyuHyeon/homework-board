@@ -31,6 +31,7 @@
             String contents = model.getContents().trim();
             String writedate = model.getWritedate();
             int readcount = model.getReadcount();
+            String filename = model.getFilename();
         %>
 
     <center><font size='3'><b> 게시판 </b></font>
@@ -45,12 +46,18 @@
         <TABLE border='0' width='600'>
             <TR>
                 <TD align='left'>
-                    <font size='2'> 작성자 : <%=name%></font>
+                    <font size='2'> 작성자 : <a href="email.jsp?num=<%=num%>"><%=name%></font>
                 </TD>
 
                 <TD align=right>
                     <font size='2'>작성일: <%=writedate%>, 조회수: <%=readcount%></font>
                 </TD>
+            </TR>
+            
+            <TR>
+                    <TD align=left>
+                    <font size='2'>파일이름 :<a href="file_down.jsp?num=<%=num %>"> <%=filename %></font>
+                    </TD>
             </TR>
         </TABLE>
 
@@ -101,7 +108,6 @@
 
         <%
             dao.update_readcount(num);
-
         %>
 
     </TABLE>
