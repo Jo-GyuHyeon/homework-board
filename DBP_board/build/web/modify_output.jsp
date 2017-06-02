@@ -1,4 +1,4 @@
-<%@page import="dao.*"%>
+F<%@page import="dao.*"%>
 <%@page import="bean.*"%>
 <%@ page language="java" contentType="text/html; charset=euc-kr" %>
 <%@ page import = "java.util.*" %>
@@ -13,8 +13,8 @@ String title = request.getParameter("title");
 String contents = request.getParameter("contents");
 
 
-Model model = new Model();
-ModelDao dao = new ModelDaoFactory().modelDao();
+Article model = new Article();
+ArticleDao dao = new ArticleDaoFactory().modelDao();
 
 model.setName(name);
 model.setPass(pass);
@@ -25,5 +25,5 @@ model.setNum(num);
 
 dao.update(model);
 
-response.sendRedirect("listboard.jsp");
+response.sendRedirect("./listboard.jsp");
 %>

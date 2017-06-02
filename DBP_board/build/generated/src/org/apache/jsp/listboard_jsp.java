@@ -53,215 +53,242 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
  request.setCharacterEncoding("UTF-8"); 
       out.write("\r\n");
       out.write("\r\n");
+      out.write("<!DOCTYPE html>\r\n");
       out.write("<HTML>\r\n");
-      out.write("<HEAD>\r\n");
-      out.write("<TITLE> 게시판 </TITLE>\r\n");
-      out.write("<SCRIPT language=\"JavaScript\">\r\n");
-      out.write("function Check()\r\n");
-      out.write("{\r\n");
-      out.write("if (Form.keyword.value.length < 1) {\r\n");
-      out.write("\talert(\"검색어를 입력하세요.\");\r\n");
-      out.write("\tForm.keyword.focus(); \r\n");
-      out.write("         return false;\r\n");
-      out.write("\t}\r\n");
-      out.write("}\r\n");
-      out.write("</SCRIPT>\r\n");
+      out.write("    <HEAD>\r\n");
+      out.write("        <TITLE> 게시판 </TITLE>\r\n");
+      out.write("        <SCRIPT language=\"JavaScript\">\r\n");
+      out.write("            function Check()\r\n");
+      out.write("            {\r\n");
+      out.write("                if (Form.keyword.value.length < 1) {\r\n");
+      out.write("                    alert(\"검색어를 입력하세요.\");\r\n");
+      out.write("                    Form.keyword.focus();\r\n");
+      out.write("                    return false;\r\n");
+      out.write("                }\r\n");
+      out.write("            }\r\n");
+      out.write("        </SCRIPT>\r\n");
       out.write("\r\n");
-      out.write("<META http-equiv=\"Content-Type\" content=\"text/html; charset=euc-kr\">\r\n");
-      out.write("<style type='text/css'>\r\n");
-      out.write("<!--\r\n");
-      out.write("\ta:link\t\t{font-family:\"\";color:black;text-decoration:none;}\r\n");
-      out.write("\ta:visited\t{font-family:\"\";color:black;text-decoration:none;}\r\n");
-      out.write("\ta:hover\t\t{font-family:\"\";color:black;text-decoration:underline;}\r\n");
-      out.write("-->\r\n");
-      out.write("</style>\r\n");
+      out.write("        <META http-equiv=\"Content-Type\" content=\"text/html; charset=euc-kr\">\r\n");
+      out.write("        <style type='text/css'>\r\n");
+      out.write("            <!--\r\n");
+      out.write("            a:link\t\t{font-family:\"\";color:black;text-decoration:none;}\r\n");
+      out.write("            a:visited\t{font-family:\"\";color:black;text-decoration:none;}\r\n");
+      out.write("            a:hover\t\t{font-family:\"\";color:black;text-decoration:underline;}\r\n");
+      out.write("            -->\r\n");
+      out.write("        </style>\r\n");
       out.write("\r\n");
-      out.write("</HEAD>\r\n");
-      out.write("<BODY>\r\n");
+      out.write("    </HEAD>\r\n");
+      out.write("    <BODY>\r\n");
       out.write("\r\n");
+      out.write("        ");
 
-String pageNum = request.getParameter("pageNum");
-if(pageNum == null){
-	pageNum = "1";
-}
+            String key = request.getParameter("key");
+            String keyword = request.getParameter("keyword");
 
-int listSize = 5;
-int currentPage = Integer.parseInt(pageNum);
-int startRow = (currentPage - 1) * listSize + 1;
-int endRow = currentPage * listSize;
-int lastRow = 0;
+            String pageNum = request.getParameter("pageNum");
+            if (pageNum == null) {
+                pageNum = "1";
+            }
 
-ModelDao dao = new ModelDaoFactory().modelDao();
-lastRow=dao.getLastRow();
+            int listSize = 5;
+            int currentPage = Integer.parseInt(pageNum);
+            int startRow = (currentPage - 1) * listSize + 1;
+            int endRow = currentPage * listSize;
+            int lastRow = 0;
+            List list = null;
 
+            ModelDao dao = new ModelDaoFactory().modelDao();
+            //  if (key == null || keyword == null) {
+            //        lastRow = dao.getLastRow();
+            //  } else {
+            //       lastRow = dao.keyLastRow(key, keyword);
+            //   }
+            lastRow = dao.getSelectLastRow(key, keyword);
+        
       out.write("\r\n");
       out.write("\r\n");
-      out.write("<center><font size='3'><b> 게시판 </b></font></TD>\r\n");
-      out.write("                                    \r\n");
-      out.write("<TABLE border='0' width='600' cellpadding='0' cellspacing='0'>\r\n");
-      out.write("\t<TR>\r\n");
-      out.write("\t\t<TD><hr size='1' noshade>\r\n");
-      out.write("\t\t</TD>\r\n");
-      out.write(" \t</TR>\r\n");
-      out.write("</TABLE>              \r\n");
-      out.write("                    \r\n");
-      out.write("<TABLE border='0' cellspacing=1 cellpadding=2 width='600'>      \r\n");
+      out.write("    <center><font size='3'><b> 게시판 </b></font></TD>\r\n");
       out.write("\r\n");
-      out.write("\t<TR bgcolor='cccccc'>      \r\n");
-      out.write("\t\t<TD><font size=2><center><b>번호</b></center></font></TD>      \r\n");
-      out.write("\t\t<TD><font size=2><center><b>글 제목</b></center></font></TD>      \r\n");
-      out.write("\t\t<TD><font size=2><center><b>작성자</b></center></font></TD>      \r\n");
-      out.write("\t\t<TD><font size=2><center><b>작성일</b></center></font></TD>      \r\n");
-      out.write("\t\t<TD><font size=2><center><b>조회</b></center></font></TD>      \r\n");
-      out.write("\t</TR>   \r\n");
-      out.write("\t\r\n");
+      out.write("    <TABLE border='0' width='600' cellpadding='0' cellspacing='0'>\r\n");
+      out.write("        <TR>\r\n");
+      out.write("            <TD><hr size='1' noshade>\r\n");
+      out.write("            </TD>\r\n");
+      out.write("        </TR>\r\n");
+      out.write("    </TABLE>              \r\n");
+      out.write("\r\n");
+      out.write("    <TABLE border='0' cellspacing=1 cellpadding=2 width='600'>      \r\n");
+      out.write("\r\n");
+      out.write("        <TR bgcolor='cccccc'>      \r\n");
+      out.write("            <TD><font size=2><center><b>번호</b></center></font></TD>      \r\n");
+      out.write("        <TD><font size=2><center><b>글 제목</b></center></font></TD>      \r\n");
+      out.write("        <TD><font size=2><center><b>작성자</b></center></font></TD>      \r\n");
+      out.write("        <TD><font size=2><center><b>작성일</b></center></font></TD>      \r\n");
+      out.write("        <TD><font size=2><center><b>조회</b></center></font></TD>      \r\n");
+      out.write("        </TR>   \r\n");
+      out.write("\r\n");
+      out.write("        ");
+            if (lastRow > 0) {
+                //  if (key == null || keyword == null) {
+                //       list = dao.getDBAll(startRow, endRow);
+                //  } else {
+                //      list = dao.getKeyDBAll(key, keyword);
+                //  }
+                list = dao.getSelectDBAll(startRow, endRow, key, keyword);
 
-if(lastRow > 0) {
-	
-	List list = dao.getDBAll(startRow, endRow);
-	Iterator it = list.iterator();
-	Model bean;
-	while(it.hasNext()){
-		bean=(Model)it.next();
-
+                Iterator it = list.iterator();
+                Model bean;
+                while (it.hasNext()) {
+                    bean = (Model) it.next();
+                    int listnum = bean.getNum();
+                    String name = bean.getName();
+                    String email = bean.getEmail();
+                    String title = bean.getTitle();
+                    String writedate = bean.getWritedate();
+                    int readcount = bean.getReadcount();
+        
       out.write("\r\n");
       out.write("\r\n");
-      out.write("\t<TR bgcolor='ededed'>     \r\n");
-      out.write("\t\t<TD align=center><font size=2 color='black'>\r\n");
-      out.write("                                    ");
-      out.print(bean.getNum() );
+      out.write("        <TR bgcolor='ededed'>     \r\n");
+      out.write("            <TD align=center><font size=2 color='black'>\r\n");
+      out.write("                ");
+      out.print(listnum);
       out.write("</font></TD>     \r\n");
-      out.write("\t\t<TD align=left>\r\n");
-      out.write("\t\t\t<a href=\"write_output.jsp?num=");
-      out.print(bean.getNum() );
+      out.write("            <TD align=left>\r\n");
+      out.write("                <a href=\"write_output.jsp?num=");
+      out.print(listnum);
       out.write("\">\r\n");
-      out.write("\t\t\t<font size=2 color=\"black\">");
-      out.print(bean.getTitle() );
+      out.write("                    <font size=2 color=\"black\">");
+      out.print(title);
       out.write("</font></a>\r\n");
-      out.write("\t\t</TD>\r\n");
-      out.write("\t\t<TD align=center>    \r\n");
-      out.write("\t\t\t<a href=\"");
-      out.print(bean.getEmail() );
+      out.write("            </TD>\r\n");
+      out.write("            <TD align=center>    \r\n");
+      out.write("                <a href=\"");
+      out.print(email);
       out.write("\">\r\n");
-      out.write("\t\t\t<font size=2 color=\"black\">");
-      out.print(bean.getName() );
+      out.write("                    <font size=2 color=\"black\">");
+      out.print(name);
       out.write("</font></a>     \r\n");
-      out.write("\t\t</TD>     \r\n");
-      out.write("\t\t<TD align=center><font size=2>");
-      out.print(bean.getWritedate() );
+      out.write("            </TD>     \r\n");
+      out.write("            <TD align=center><font size=2>");
+      out.print(writedate);
       out.write("</font>\r\n");
-      out.write("\t\t</TD>     \r\n");
-      out.write("\t\t<TD align=center><font size=2>");
-      out.print(bean.getReadcount() );
+      out.write("            </TD>     \r\n");
+      out.write("            <TD align=center><font size=2>");
+      out.print(readcount);
       out.write("</font>     \r\n");
-      out.write("\t</TR>  \r\n");
-      out.write("\t   \t\r\n");
-     
-	}	
+      out.write("        </TR>  \r\n");
+      out.write("\r\n");
+      out.write("        ");
 
+            }
+        
       out.write("\r\n");
       out.write("\r\n");
-      out.write("</TABLE>     \r\n");
-      out.write("                \r\n");
-      out.write("<TABLE border='0' width='600' cellpadding='0' cellspacing='0'>\r\n");
-      out.write("\t<TR>\r\n");
-      out.write("\t\t<TD><hr size='1' noshade>\r\n");
-      out.write("\t\t</TD>\r\n");
-      out.write(" \t</TR>\r\n");
-      out.write("</TABLE>                    \r\n");
+      out.write("    </TABLE>     \r\n");
       out.write("\r\n");
-      out.write("<TABLE border=0 width=600>\r\n");
-      out.write("\t<TR>\r\n");
-      out.write("\t\t<TD align=left>\t\t\r\n");
-      out.write("\t\t</TD>\r\n");
+      out.write("    <TABLE border='0' width='600' cellpadding='0' cellspacing='0'>\r\n");
+      out.write("        <TR>\r\n");
+      out.write("            <TD><hr size='1' noshade>\r\n");
+      out.write("            </TD>\r\n");
+      out.write("        </TR>\r\n");
+      out.write("    </TABLE>                    \r\n");
       out.write("\r\n");
-      out.write("\t\t<TD align='right'>\t\t\r\n");
-      out.write("\t\t<a href='write.jsp'>[등록]</a>\t\t\t\t\r\n");
-      out.write("\t\t</TD>\r\n");
-      out.write("\t</TR>\r\n");
-      out.write("</TABLE>\r\n");
-      out.write("\t                   \r\n");
-
-
-}
-
-if(lastRow > 0) {
-	int setPage = 1;
-	int lastPage = 0;
-	if(lastRow % listSize == 0)
-		lastPage = lastRow / listSize;
-	else
-		lastPage = lastRow / listSize + 1;
-
-	if(currentPage > 1) {
-
+      out.write("    <TABLE border=0 width=600>\r\n");
+      out.write("        <TR>\r\n");
+      out.write("            <TD align=left>\t\t\r\n");
+      out.write("            </TD>\r\n");
       out.write("\r\n");
-      out.write("\t<a href=\"listboard.jsp?pageNum=");
-      out.print(currentPage-1);
+      out.write("            <TD align='right'>\t\t\r\n");
+      out.write("                <a href='./write.jsp'>[등록]</a>\t\t\t\t\r\n");
+      out.write("            </TD>\r\n");
+      out.write("        </TR>\r\n");
+      out.write("    </TABLE>\r\n");
+      out.write("\r\n");
+      out.write("    ");
+
+        }
+
+        if (lastRow > 0) {
+            int setPage = 1;
+            int lastPage = 0;
+            if (lastRow % listSize == 0) {
+                lastPage = lastRow / listSize;
+            } else {
+                lastPage = lastRow / listSize + 1;
+            }
+
+            if (currentPage > 1) {
+    
+      out.write("\r\n");
+      out.write("    <a href=\"./listboard.jsp?pageNum=");
+      out.print(currentPage - 1);
       out.write("\">[이전]</a>\t\r\n");
-	
-	}
-	while(setPage <= lastPage) {
+      out.write("    ");
 
+        }
+        while (setPage <= lastPage) {
+    
       out.write("\r\n");
-      out.write("\t\t<a href=\"listboard.jsp?pageNum=");
+      out.write("    <a href=\"./listboard.jsp?pageNum=");
       out.print(setPage);
       out.write("\">[");
       out.print(setPage);
       out.write("]</a>\r\n");
+      out.write("    ");
 
-		setPage = setPage + 1;
-	}
-	if(lastPage > currentPage) {
-
+            setPage = setPage + 1;
+        }
+        if (lastPage > currentPage) {
+    
       out.write("\r\n");
-      out.write("\t\t<a href=\"listboard.jsp?pageNum=");
-      out.print(currentPage+1);
+      out.write("    <a href=\"./listboard.jsp?pageNum=");
+      out.print(currentPage + 1);
       out.write("\">[다음]</a>\r\n");
+      out.write("    ");
 
-	}
-}
-
+            }
+        }
+    
       out.write("  \r\n");
-      out.write("                <TABLE border='0' width='600' cellpadding='0' cellspacing='0'>\r\n");
-      out.write("\t<TR>\r\n");
-      out.write("\t\t<TD><hr size='1' noshade>\r\n");
-      out.write("\t\t</TD>\r\n");
-      out.write(" \t</TR>\r\n");
-      out.write("</TABLE>                    \r\n");
+      out.write("    <TABLE border='0' width='600' cellpadding='0' cellspacing='0'>\r\n");
+      out.write("        <TR>\r\n");
+      out.write("            <TD><hr size='1' noshade>\r\n");
+      out.write("            </TD>\r\n");
+      out.write("        </TR>\r\n");
+      out.write("    </TABLE>                    \r\n");
       out.write("\r\n");
-      out.write("<TABLE border=0 width=600>\r\n");
-      out.write("\t<TR>\r\n");
-      out.write("\t\t<TD align='center'>\t\r\n");
-      out.write("\t\t\t<TABLE border='0' cellpadding='0' cellspacing='0'>\r\n");
-      out.write("\t\t\t<FORM Name='Form' Method='POST' Action='listboard.jsp' OnSubmit='return Check()'>\r\n");
-      out.write("\t\t\t<input type='hidden' name='search' value='1'>\r\n");
-      out.write("\t\t\t<TR>\r\n");
-      out.write("\t\t\t\t<TD align='right'>\r\n");
-      out.write("\t\t\t\t<select name='key' style=\"background-color:cccccc;\">\r\n");
-      out.write("\t\t\t\t<option value='title' selected><font size='2'>\r\n");
-      out.write("                                                        글제목</font></option>\r\n");
-      out.write("\t\t\t\t<option value='contents'><font size='2'>\r\n");
-      out.write("                                                        글내용</font></option>\r\n");
-      out.write("\t\t\t\t<option value='name'><font size='2'>\r\n");
-      out.write("                                                        작성자</font></option>\r\n");
-      out.write("\t\t\t\t</select>\r\n");
-      out.write("\t\t\t\t</TD>\r\n");
-      out.write("\t\t\t\t<TD align='left'>\r\n");
-      out.write("\t\t\t\t\t<input type='text' name='keyword' \r\n");
-      out.write("                                                   value='' size='20' maxlength='30'>\r\n");
-      out.write("\t\t\t\t\t<input type='submit' value='검색'>\r\n");
-      out.write("\t\t\t\t</td>\r\n");
-      out.write("\t\t\t  </TR>\r\n");
-      out.write("\t\t\t  </FORM>\r\n");
-      out.write("\t\t\t  </TABLE> \r\n");
-      out.write("\t\t</TD>\r\n");
+      out.write("    <TABLE border=0 width=600>\r\n");
+      out.write("        <TR>\r\n");
+      out.write("            <TD align='center'>\t\r\n");
+      out.write("                <TABLE border='0' cellpadding='0' cellspacing='0'>\r\n");
+      out.write("                    <FORM Name='Form' Method='POST' Action='listboard.jsp' method = 'post' OnSubmit='return Check()'>\r\n");
+      out.write("                        <input type='hidden' name='search' value='1'>\r\n");
+      out.write("                        <TR>\r\n");
+      out.write("                            <TD align='right'>\r\n");
+      out.write("                                <select name='key' style=\"background-color:cccccc;\">\r\n");
+      out.write("                                    <option value='title' selected><font size='2'>\r\n");
+      out.write("                                    글제목</font></option>\r\n");
+      out.write("                                    <option value='contents'><font size='2'>\r\n");
+      out.write("                                    글내용</font></option>\r\n");
+      out.write("                                    <option value='name'><font size='2'>\r\n");
+      out.write("                                    작성자</font></option>\r\n");
+      out.write("                                </select>\r\n");
+      out.write("                            </TD>\r\n");
+      out.write("                            <TD align='left'>\r\n");
+      out.write("                                <input type='text' name='keyword' \r\n");
+      out.write("                                       value='' size='20' maxlength='30'>\r\n");
+      out.write("                                <input type='submit' value='검색'>\r\n");
+      out.write("                            </td>\r\n");
+      out.write("                        </TR>\r\n");
+      out.write("                    </FORM>\r\n");
+      out.write("                </TABLE> \r\n");
+      out.write("            </TD>\r\n");
       out.write("\r\n");
-      out.write("\t\t<TD align='right'>\t\t\r\n");
-      out.write("\t\t<a href='write.jsp'>[등록]</a>\t\t\t\t\r\n");
-      out.write("\t\t</TD>\r\n");
-      out.write("\t</TR>\r\n");
-      out.write("</TABLE>  \r\n");
+      out.write("            <TD align='right'>\t\t\r\n");
+      out.write("                <a href='./write.jsp'>[등록]</a>\t\t\t\t\r\n");
+      out.write("            </TD>\r\n");
+      out.write("        </TR>\r\n");
+      out.write("    </TABLE>  \r\n");
       out.write("</BODY>                     \r\n");
       out.write("</HTML>\r\n");
     } catch (Throwable t) {

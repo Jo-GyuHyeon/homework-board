@@ -215,7 +215,7 @@ if(lastRow > 0) {
 	if(currentPage > 1) {
 
       out.write("\n");
-      out.write("\t\t<a href=\"listboard.jsp?pageNum=");
+      out.write("\t\t<a href=\"newjsp.jsp?pageNum=");
       out.print(currentPage-1);
       out.write("\">[이전]</a>\t\n");
 	
@@ -232,7 +232,7 @@ if(lastRow > 0) {
 		}else{
 
       out.write("\n");
-      out.write("\t\t<a href=\"listboard.jsp?pageNum=");
+      out.write("\t\t<a href=\"newjsp.jsp?pageNum=");
       out.print(i);
       out.write("\">[");
       out.print(i);
@@ -243,7 +243,7 @@ if(lastRow > 0) {
 	if(lastPage > currentPage) {
 
       out.write("\n");
-      out.write("\t\t<a href=\"listboard.jsp?pageNum=");
+      out.write("\t\t<a href=\"newjsp.jsp?pageNum=");
       out.print(currentPage+1);
       out.write("\">[다음]</a>\n");
 
@@ -263,7 +263,7 @@ if(lastRow > 0) {
       out.write("\t<TR>\n");
       out.write("\t\t<TD align='center'>\t\n");
       out.write("\t\t\t<TABLE border='0' cellpadding='0' cellspacing='0'>\n");
-      out.write("\t\t\t<FORM Name='Form' Method='POST' Action='listboard.jsp' OnSubmit='return Check()'>\n");
+      out.write("\t\t\t<FORM Name='Form' Method='POST' Action='newjsp.jsp' OnSubmit='return Check()'>\n");
       out.write("\t\t\t<input type='hidden' name='search' value='1'>\n");
       out.write("\t\t\t<TR>\n");
       out.write("\t\t\t\t<TD align='right'>\n");

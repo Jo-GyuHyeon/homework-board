@@ -1,10 +1,10 @@
 package dao;
 
-public class ModelDaoFactory {
-	public  ModelDaoFactory() {
+public class ArticleDaoFactory {
+	public  ArticleDaoFactory() {
 	}
-	public ModelDao modelDao() {
-		ModelDao dao = new ModelDao(connectionMaker());
+	public ArticleDao modelDao() {
+		ArticleDao dao = new ArticleDao(connectionMaker());
 		return dao;
 	}
 
