@@ -1,2 +1,0 @@
-board\DBP_board\build\web\filesave가 업로드 파일 저장 경로
-(clean & build 하면 경로 사라짐)
