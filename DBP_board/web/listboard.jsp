@@ -41,10 +41,10 @@
                 pageNum = "1";
             }
 
-            int listSize = 5;
+           int listSize = 10;
             int currentPage = Integer.parseInt(pageNum);
-            int startRow = (currentPage - 1) * listSize + 1;
-            int endRow = currentPage * listSize;
+            //    int startRow = (currentPage - 1) * listSize + 1;
+            //  int endRow = currentPage * listSize;
             int lastRow = 0;
             List list = null;
 
@@ -55,6 +55,8 @@
             //       lastRow = dao.keyLastRow(key, keyword);
             //   }
             lastRow = dao.getSelectLastRow(key, keyword);
+            int endRow = lastRow - ((Integer.parseInt(pageNum) - 1) * listSize);
+            int startRow = endRow - (listSize-1);
         %>
 
     <center><font size='3'><b> 게시판 </b></font></TD>
