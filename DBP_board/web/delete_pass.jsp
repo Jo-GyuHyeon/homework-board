@@ -1,81 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <% request.setCharacterEncoding("UTF-8"); %>
-<!DOCTYPE html>
-<html>
 
-<head>
-  <title> 게시판 삭제 </title>
+<HTML>
+<HEAD>
+<TITLE> 게시판 삭제 </TITLE>
+<meta http-equiv='Content-Type' content='text/html; charset=euc-kr'>
+<style type='text/css'>
+<!--
+	a:link		{font-family:"";color:black;text-decoration:none;}
+	a:visited	{font-family:"";color:black;text-decoration:none;}
+	a:hover		{font-family:"";color:black;text-decoration:underline;}
+-->
+</style>
+</HEAD>
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-  <script src="semantic/semantic.js"></script>
-  <link rel="stylesheet" type="text/css" href="semantic/semantic.css" />
-  <style>
-    div.field {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-
-    form {
-      margin-top: 30px;
-    }
-
-    @media(min-width: 720px) {
-      #password {
-        width: 50%;
-      }
-    }
-  </style>
-</head>
-
-<body>
+<BODY>
 
 <%
 String num = request.getParameter("num");
 %>
 
-  <form class="ui form" id="submit" action="delete_input.jsp" method="post">
-    <h2 class="ui dividing header"><center>비밀번호 확인</center></h2>
-    <center>
-      <input type="hidden" name="num" value="<%=num%>">
-      <div class="field">
-        <input id="password" type="password" name="pass" placeholder="password" />
-        <input id="confirm" class="ui button" type="button" value="확인" />
-        <input class="ui button" type="button" href="./listboard.jsp" value="목록 보기" />
-      </div>
-    </center>
+<center><font size='3'><b>비밀번호 확인</b></font>                                                
 
-      <div class="ui basic modal">
-        <div class="ui icon header">
-          <i class="archive icon"></i>글 삭제
-        </div>
-        <div class="content">
-          <p>
-            <center>정말 삭제하시겠습니까?</center>
-          </p>
-        </div>
-        <div class="actions">
-          <center>
-            <div class="ui red basic cancel inverted button">
-              <i class="remove icon"></i> No
-            </div>
-            <div class="ui green ok approve inverted button" onclick="document.getElementById('submit').submit()">
-              <i class="checkmark icon"></i> Yes
-            </div>
-          </center>
-        </div>
-      </div>
+<TABLE border='0' width='600' cellpadding='0' cellspacing='0'>
+	<TR>
+		<TD><hr size='1' noshade>
+		</TD>
+ 	</TR>
+</TABLE>                 
 
-  </form>
+<Form Action='delete_input.jsp' Method='post'>                 
+<input type='hidden' name='num' value='<%=num%>'>
 
-  <script>
-    $('#confirm').click(function() {
-      $('.ui.basic.modal')
-        .modal('show');
-    })
-  </script>
-</body>
+<TABLE border='0' width='300' align='center'>
+ 	<TR>
+         	<TD align='center'>
+            		<font size=2><B>비밀번호</B></font>
+	 	</TD>
+	 	<TD>
+            		<input type='password' name='pass' size=20 maxlength=20>
+            		<input type='submit' value=' 확 인 ' style='background-color:cccccc; font-weight:bolder'>
+	 	</TD>
+      	</TR>
+</TABLE>
+                                   
+<TABLE border='0' width='600' cellpadding='0' cellspacing='0'>
+	<TR>
+		<TD><hr size='1' noshade>
+		</TD>
+ 	</TR>
+</TABLE>                    
 
-</html>
+<center><a href='./listboard.jsp'>[목록 보기]</a></center>      
+
+</FORM>
+
+</BODY>
+</HTML>
