@@ -41,22 +41,16 @@
                 pageNum = "1";
             }
 
-           int listSize = 10;
+            int listSize = 10;
+            int pageSize = 10;
             int currentPage = Integer.parseInt(pageNum);
-            //    int startRow = (currentPage - 1) * listSize + 1;
-            //  int endRow = currentPage * listSize;
             int lastRow = 0;
             List list = null;
-
             ArticleDao dao = new ArticleDaoFactory().modelDao();
-            //  if (key == null || keyword == null) {
-            //        lastRow = dao.getLastRow();
-            //  } else {
-            //       lastRow = dao.keyLastRow(key, keyword);
-            //   }
             lastRow = dao.getSelectLastRow(key, keyword);
             int endRow = lastRow - ((Integer.parseInt(pageNum) - 1) * listSize);
-            int startRow = endRow - (listSize-1);
+            int startRow = endRow - (listSize - 1);
+            Paging paging = new Paging(lastRow, Integer.parseInt(pageNum), listSize, pageSize);
         %>
 
     <center><font size='3'><b> 게시판 </b></font></TD>
@@ -79,11 +73,6 @@
         </TR>   
 
         <%            if (lastRow > 0) {
-                //  if (key == null || keyword == null) {
-                //       list = dao.getDBAll(startRow, endRow);
-                //  } else {
-                //      list = dao.getKeyDBAll(key, keyword);
-                //  }
                 list = dao.getSelectDBAll(startRow, endRow, key, keyword);
 
                 Iterator it = list.iterator();
@@ -141,31 +130,22 @@
     <%
         }
 
-        if (lastRow > 0) {
-            int setPage = 1;
-            int lastPage = 0;
-            if (lastRow % listSize == 0) {
-                lastPage = lastRow / listSize;
-            } else {
-                lastPage = lastRow / listSize + 1;
-            }
+        if (paging.getStartPage() > 5) {
+    %>
+    <a href="./listboard.jsp?pageNum=<%=paging.getStartPage() - 5%>">[이전]</a>	
+    <%
+        }
+        while (paging.getStartPage() <= paging.getEndPage()) {
+    %>
+    <a href="./listboard.jsp?pageNum=<%=paging.getStartPage()%>">[<%=paging.getStartPage()%>]</a>
+    <%
 
-            if (currentPage > 1) {
-    %>
-    <a href="./listboard.jsp?pageNum=<%=currentPage - 1%>">[이전]</a>	
-    <%
+            paging.setStartPage(paging.getStartPage() + 1);
         }
-        while (setPage <= lastPage) {
+        if (paging.getEndPage() < paging.getTotalPages()) {
     %>
-    <a href="./listboard.jsp?pageNum=<%=setPage%>">[<%=setPage%>]</a>
+    <a href="./listboard.jsp?pageNum=<%=paging.getStartPage()%>">[다음]</a>
     <%
-            setPage = setPage + 1;
-        }
-        if (lastPage > currentPage) {
-    %>
-    <a href="./listboard.jsp?pageNum=<%=currentPage + 1%>">[다음]</a>
-    <%
-            }
         }
     %>  
     <TABLE border='0' width='600' cellpadding='0' cellspacing='0'>
