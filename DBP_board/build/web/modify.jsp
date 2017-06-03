@@ -83,7 +83,7 @@
 
             <TABLE border='0' width='600'>
                 <TR>
-                <TD width='100' bgcolor='cccccc'>
+                    <TD width='100' bgcolor='cccccc'>
                 <font size='2'><center><b>작성자</b></center></font> 
                 </TD>
                 <TD>

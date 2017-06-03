@@ -1,147 +1,148 @@
-<%@ page language="java" contentType="text/html; charset=euc-kr" %>
-<!DOCTYPE html>
-<html>
-<head>
-  <title> TeamName | QnA </title>
+Ôªø<HTML>
+    <HEAD>
+        <TITLE> Í≤åÏãúÌåê </TITLE>
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-  <script src="semantic/semantic.js"></script>
-  <link rel="stylesheet" type="text/css" href="semantic/semantic.css" />
+        <SCRIPT language="JavaScript">
+            function Check()
+            {
+                if (Write.name.value.length < 1) {
+                    alert("ÏûëÏÑ±ÏûêÎ•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî.");
+                    Write.name.focus();
+                    return false;
+                }
 
-  <script>
-    function Check() {
-      if (Write.name.value.length < 1) {
-        alert("¿€º∫¿⁄∏¶ ¿‘∑¬«œººø‰.");
-        Write.name.focus();
-        return false;
-      }
+                if (Write.pass.value.length < 1) {
+                    alert("ÎπÑÎ∞ÄÎ≤àÌò∏Î•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî.");
+                    Write.pass.focus();
+                    return false;
+                }
 
-      if (Write.pass.value.length < 1) {
-        alert("∫Òπ–π¯»£∏¶ ¿‘∑¬«œººø‰.");
-        Write.pass.focus();
-        return false;
-      }
+                if (Write.email.value.indexOf("@") + "" == "-1" ||
+                        Write.email.value.indexOf(".") + "" == "-1" ||
+                        Write.email.value == "")
+                {
+                    alert("E-mailÏùÑ ÏûÖÎ†•ÌïòÏÑ∏Ïöî.");
+                    Write.email.focus();
+                    return false;
+                }
 
-      if (Write.email.value.indexOf("@") + "" == "-1" ||
-        Write.email.value.indexOf(".") + "" == "-1" ||
-        Write.email.value == "") {
-        alert("E-mail¿ª ¿‘∑¬«œººø‰.");
-        Write.email.focus();
-        return false;
-      }
+                if (Write.title.value.length < 1) {
+                    alert("Í∏ÄÏ†úÎ™©ÏùÑ ÏûÖÎ†•ÌïòÏÑ∏Ïöî.");
+                    Write.write_title.focus();
+                    return false;
+                }
 
-      if (Write.title.value.length < 1) {
-        alert("±€¡¶∏Ò¿ª ¿‘∑¬«œººø‰.");
-        Write.write_title.focus();
-        return false;
-      }
+                if (Write.contents.value.length < 1) {
+                    alert("Í∏ÄÎÇ¥Ïö©ÏùÑ ÏûÖÎ†•ÌïòÏÑ∏Ïöî.");
+                    Write.content.focus();
+                    return false;
+                }
 
-      if (Write.contents.value.length < 1) {
-        alert("±€≥ªøÎ¿ª ¿‘∑¬«œººø‰.");
-        Write.content.focus();
-        return false;
-      }
-    }
-  </script>
-  <style>
-    div.field {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-    form {
-      margin-top: 30px;
-    }
-    @media(min-width: 720px){
-      #writer, #password, #email{
-        width: 50%;
-      }
-    }
-  </style>
-</head>
+            }
 
-<body>
+        </SCRIPT>
+    </HEAD>
 
-  <form class="ui form" name="Write" action="write_input.jsp" method="post" enctype="multipart/form-data" onsubmit="return Check()">
-    <h1 class="ui dividing header"><center>Q & A</center></h1>
-    <div class="field">
-      <label>* ¿€º∫¿⁄</label>
-      <input id="writer" type="text" name="name" placeholder="writer" />
-    </div>
-    <div class="field">
-      <label>* ∫Òπ–π¯»£(∞‘Ω√π∞ ºˆ¡§ ªË¡¶Ω√ « ø‰«’¥œ¥Ÿ.)</label>
-      <input id="password" type="password" name="pass" placeholder="password" />
-    </div>
-    <div class="field">
-      <label>¿Ã∏ﬁ¿œ</label>
-      <input id="email" type="email" name="email" placeholder="e-mail" />
-    </div>
-    <div class="field">
-      <label>∆ƒ¿œ √∑∫Œ(ªÁ¡¯, πÆº≠ ∆ƒ¿œ∏∏ æ˜∑ŒµÂ ∞°¥…«’¥œ¥Ÿ.)</label>
-      <div class="ui action input">
-        <input type="text" id="_attachmentName" placeholder="filename" readonly>
-        <label for="attachmentName" class="ui icon button btn-file">
-             <i class="attach icon"></i>
-             <input type="file" id="attachmentName" name="filename" style="display: none">
-        </label>
-      </div>
-    </div>
-    <div class="field">
-      <label>±€ ¡¶∏Ò</label>
-      <input type="text" name="title" placeholder="write title" />
-    </div>
-    <div class="field">
-      <label>±€ ≥ªøÎ</label>
-      <textarea name="contents" placeholder="write contents"></textarea>
-    </div>
-    <div class="field">
-      <input class="ui button" type="reset" value="¥ŸΩ√ ¿€º∫"/>
-      <input class="ui button" type="submit" value="µÓ∑œ">
-      <input type="button" class="ui button" value="∏Ò∑œ¿∏∑Œ" onclick="location.href='./listboard.jsp'">
-    </div>
-  </form>
-    
-  <script>
-    var fileExtentionRange = '.zip .rar .tar .pdf .doc .docx .xls .xlsx .ppt .pptx .hwp .jpg .jpeg .png';
-    var MAX_SIZE = 30; // MB
+    <BODY>
 
-    $(document).on('change', '.btn-file :file', function() {
-      var input = $(this);
+    <center><font size='3'><b> Í≤åÏãúÌåê Í∏ÄÏì∞Í∏∞ </b></font>                   
 
-      if (navigator.appVersion.indexOf("MSIE") != -1) { // IE
-        var label = input.val();
+        <TABLE border='0' width='600' cellpadding='0' cellspacing='0'>
+            <TR>
+                <TD><hr size='1' noshade>
+                </TD>
+            </TR>
+        </TABLE>
 
-        input.trigger('fileselect', [1, label, 0]);
-      } else {
-        var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-        var numFiles = input.get(0).files ? input.get(0).files.length : 1;
-        var size = input.get(0).files[0].size;
+        <FORM Name='Write' Action='write_input.jsp' Method='post' enctype="multipart/form-data" OnSubmit='return Check()'>
 
-        input.trigger('fileselect', [numFiles, label, size]);
-      }
-    });
+            <TABLE border='0' width='600' cellpadding='2' cellspacing='2'>
+                <TR>
+                    <TD width='100' bgcolor='cccccc'>
+                <font size='2'><center><b>ÏûëÏÑ±Ïûê</b></center></font> 
+                </TD>
+                <TD>
+                    <p><input type='text' size='12' name='name' > * ÌïÑÏàò</p>
+                </TD>
+                </TR>
 
-    $('.btn-file :file').on('fileselect', function(event, numFiles, label, size) {
-      $('#attachmentName').attr('name', 'attachmentName'); // allow upload.
+                <TR>
+                    <TD width='100' bgcolor='cccccc'>
+                <font size='2'><center><b>ÎπÑÎ∞ÄÎ≤àÌò∏</b></center></font>
+                </TD>
+                <TD>
+                    <p><input type='password' size='12' name='pass'> * ÌïÑÏàò (Í≤åÏãúÎ¨º ÏàòÏ†ï ÏÇ≠Ï†úÏãú ÌïÑÏöîÌï©ÎãàÎã§.)</p>
+                </TD>
+                </TR>
 
-      var postfix = label.substr(label.lastIndexOf('.'));
-      if (fileExtentionRange.indexOf(postfix.toLowerCase()) > -1) {
-        if (size > 1024 * 1024 * MAX_SIZE) {
-          alert('max size£∫<strong>' + MAX_SIZE + '</strong> MB.');
+                <TR>
+                    <TD width='100' bgcolor='cccccc'>
+                <font size='2'><center><b>E-mail</b></center></font>
+                </TD>
+                <TD>
+                    <font size='2'><input type='text' size='40' maxlength='50' name='email'></font>
+                </TD>
+                </TR>
+                
+                <TR>
+                    <TD width='100' bgcolor='cccccc'>
+                <font size='2'><center><b>ÌååÏùºÏ†ÑÏÜ°</b></center></font>
+                </TD>
+                <TD>
+                    <input type="file" name="filename">
+                </TD>
+                </TR>
+                
+                <TR>
+                    <TD colspan='2'>
+                        <hr size='1' noshade>
+                    </TD>
+                </TR>
 
-          $('#attachmentName').removeAttr('name'); // cancel upload file.
-        } else {
-          $('#_attachmentName').val(label);
-        }
-      } else {
-        alert('∆ƒ¿œ »Æ¿Â¿⁄¥¬£∫' + fileExtentionRange + '∏∏ ¿‘∑¬ ∞°¥…«’¥œ¥Ÿ.');
+                <TR>
+                    <TD width='100' bgcolor='cccccc'>
+                <font size='2'><center><b>Í∏Ä Ï†úÎ™©</b></center></font>
+                </TD>
+                <TD>
+                    <font size='2'><input type='text' size='70' maxlength='50' name='title'></font>
+                </TD>
+                </TR>
 
-        $('#attachmentName').removeAttr('name'); // cancel upload file.
-      }
-    });
-  </script>
-</body>
+                <TR>
+                    <TD bgcolor='cccccc'>
+                <font size='2'><center><b>Í∏Ä ÎÇ¥Ïö©</b></center></font>
+                </TD>
+                <TD>
+                    <font size='2'>
+                    <textarea cols='70' rows='15' wrap='virtual' name='contents' ></textarea>
+                    </font>
+                </TD>
+                </TR>
 
-</html>
+                <TR>
+                    <TD colspan='2'>
+                        <hr size='1' noshade>
+                    </TD>
+                </TR>
+
+                <TR>
+                    <TD align='center' colspan='2' width='100%'>
+                        <TABLE>
+                            <TR>
+                                <TD width='100' align='center'>
+                                    <input Type = 'Reset' Value = 'Îã§Ïãú ÏûëÏÑ±'>
+                                </TD>
+                                <TD width='200' align='center'>
+                                    <input Type = 'Submit' Value = 'Îì±Î°ù'>
+                                </TD>
+                            </TR>
+                        </TABLE>
+                    </TD>
+                </TR>
+
+            </TABLE>
+
+        </FORM>
+
+    </BODY>
+</HTML>

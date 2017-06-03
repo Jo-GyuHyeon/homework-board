@@ -32,6 +32,10 @@
             String writedate = model.getWritedate();
             int readcount = model.getReadcount();
             String filename = model.getFilename();
+
+            int lastRow = dao.getLastRow();
+            int listSize = 10;
+            String pageNum = ((lastRow - Integer.parseInt(num)) / listSize) + 1 + "";
         %>
 
     <center><font size='3'><b> 게시판 </b></font>
@@ -53,11 +57,11 @@
                     <font size='2'>작성일: <%=writedate%>, 조회수: <%=readcount%></font>
                 </TD>
             </TR>
-            
+
             <TR>
-                    <TD align=left>
-                    <font size='2'>파일이름 :<a href="file_down.jsp?num=<%=num %>"> <%=filename %></font>
-                    </TD>
+                <TD align=left>
+                    <font size='2'>파일이름 :<a href="file_down.jsp?num=<%=num%>"> <%=filename%></font>
+                </TD>
             </TR>
         </TABLE>
 
@@ -101,7 +105,7 @@
                 <TD align='right'>
                     <a href="./reply.jsp?num=<%=num%>">[답변하기]</a>
                     <a href='./write.jsp'>[글쓰기]</a>
-                    <a href='./listboard.jsp'>[목록보기]</a>
+                    <a href="./listboard.jsp?pageNum=<%=pageNum%>">[목록보기]</a>
                 </TD>
             </TR>
         </TABLE>
