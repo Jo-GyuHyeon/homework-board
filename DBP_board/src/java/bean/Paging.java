@@ -20,7 +20,7 @@ public class Paging {
     private int totalPages;
     private int startPage;
     private int endPage;
-    private int pageSize;
+   // private int pageSize;
     private String pageNum;
     private int listSize = 10;
     private  ArticleDao dao;

@@ -53,9 +53,17 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
  request.setCharacterEncoding("UTF-8"); 
       out.write("\r\n");
       out.write("\r\n");
-      out.write("<!DOCTYPE html>\r\n");
-      out.write("<HTML>\r\n");
-      out.write("    <HEAD>\r\n");
+      out.write("<!doctype html>\r\n");
+      out.write("<html>\r\n");
+      out.write("\r\n");
+      out.write("    <head>\r\n");
+      out.write("        <!-- Standard Meta -->\r\n");
+      out.write("        <meta charset=\"utf-8\">\r\n");
+      out.write("        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">\r\n");
+      out.write("        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0\">\r\n");
+      out.write("        <script src=\"https://code.jquery.com/jquery-3.1.1.min.js\" integrity=\"sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=\" crossorigin=\"anonymous\"></script>\r\n");
+      out.write("        <script src=\"semantic/semantic.js\"></script>\r\n");
+      out.write("        <link rel=\"stylesheet\" type=\"text/css\" href=\"semantic/semantic.css\" />\r\n");
       out.write("        <TITLE> 게시판 </TITLE>\r\n");
       out.write("        <SCRIPT language=\"JavaScript\">\r\n");
       out.write("            function Check()\r\n");
@@ -65,6 +73,11 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                    Form.keyword.focus();\r\n");
       out.write("                    return false;\r\n");
       out.write("                }\r\n");
+      out.write("            }\r\n");
+      out.write("            function boardWrite(pageNum)\r\n");
+      out.write("            {\r\n");
+      out.write("                //  alert(pageNum);\r\n");
+      out.write("                location.href = \"./write.jsp?pageNum=\" + pageNum;\r\n");
       out.write("            }\r\n");
       out.write("        </SCRIPT>\r\n");
       out.write("\r\n");
@@ -92,7 +105,7 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
 
             int listSize = 10;
             int pageSize = 10;
-            int currentPage = Integer.parseInt(pageNum);
+            //  int currentPage = Integer.parseInt(pageNum);
             int lastRow = 0;
             List list = null;
             ArticleDao dao = new ArticleDaoFactory().articleDao();
@@ -105,22 +118,17 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\r\n");
       out.write("    <center><font size='3'><b> 게시판 </b></font></TD>\r\n");
       out.write("\r\n");
-      out.write("    <TABLE border='0' width='600' cellpadding='0' cellspacing='0'>\r\n");
-      out.write("        <TR>\r\n");
-      out.write("            <TD><hr size='1' noshade>\r\n");
-      out.write("            </TD>\r\n");
-      out.write("        </TR>\r\n");
-      out.write("    </TABLE>              \r\n");
       out.write("\r\n");
-      out.write("    <TABLE border='0' cellspacing=1 cellpadding=2 width='600'>      \r\n");
-      out.write("\r\n");
-      out.write("        <TR bgcolor='cccccc'>      \r\n");
-      out.write("            <TD><font size=2><center><b>번호</b></center></font></TD>      \r\n");
-      out.write("        <TD><font size=2><center><b>글 제목</b></center></font></TD>      \r\n");
-      out.write("        <TD><font size=2><center><b>작성자</b></center></font></TD>      \r\n");
-      out.write("        <TD><font size=2><center><b>작성일</b></center></font></TD>      \r\n");
-      out.write("        <TD><font size=2><center><b>조회</b></center></font></TD>      \r\n");
-      out.write("        </TR>   \r\n");
+      out.write("    <table class=\"ui unstackable table\">\r\n");
+      out.write("        <thead>\r\n");
+      out.write("            <tr>\r\n");
+      out.write("                <th><center><b>번호</b></center></th>\r\n");
+      out.write("        <th><center><b>글 제목</b></center></th>\r\n");
+      out.write("        <th><center><b>작성자</b></center></th>\r\n");
+      out.write("        <th><center><b>작성일</b></center></th>\r\n");
+      out.write("        <th><center><b>조회</b></center></th>\r\n");
+      out.write("        </tr>\r\n");
+      out.write("        </thead> \r\n");
       out.write("\r\n");
       out.write("        ");
             if (lastRow > 0) {
@@ -138,36 +146,32 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
                     int readcount = bean.getReadcount();
         
       out.write("\r\n");
-      out.write("\r\n");
-      out.write("        <TR bgcolor='ededed'>     \r\n");
-      out.write("            <TD align=center><font size=2 color='black'>\r\n");
-      out.write("                ");
+      out.write("        <tbody>\r\n");
+      out.write("            <tr>\r\n");
+      out.write("                <td >");
       out.print(listnum);
-      out.write("</font></TD>     \r\n");
-      out.write("            <TD align=left>\r\n");
-      out.write("                <a href=\"write_output.jsp?num=");
+      out.write("</td>\r\n");
+      out.write("                <td ><a href=\"write_output.jsp?num=");
       out.print(listnum);
-      out.write("\">\r\n");
-      out.write("                    <font size=2 color=\"black\">");
+      out.write('"');
+      out.write('>');
       out.print(title);
-      out.write("</font></a>\r\n");
-      out.write("            </TD>\r\n");
-      out.write("            <TD align=center>    \r\n");
-      out.write("                <a href=\"email.jsp?num=");
+      out.write("</a></td>\r\n");
+      out.write("                <td ><a href=\"email.jsp?num=");
       out.print(listnum);
-      out.write("\">\r\n");
-      out.write("                    <font size=2 color=\"black\">");
+      out.write('"');
+      out.write('>');
       out.print(name);
-      out.write("</font></a>     \r\n");
-      out.write("            </TD>     \r\n");
-      out.write("            <TD align=center><font size=2>");
+      out.write("</a></td>\r\n");
+      out.write("                <td >");
       out.print(writedate);
-      out.write("</font>\r\n");
-      out.write("            </TD>     \r\n");
-      out.write("            <TD align=center><font size=2>");
+      out.write("</td>\r\n");
+      out.write("                <td >");
       out.print(readcount);
-      out.write("</font>     \r\n");
-      out.write("        </TR>  \r\n");
+      out.write("</td>\r\n");
+      out.write("            </tr>\r\n");
+      out.write("        </tbody>\r\n");
+      out.write("\r\n");
       out.write("\r\n");
       out.write("        ");
 
@@ -175,88 +179,81 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
         
       out.write("\r\n");
       out.write("\r\n");
-      out.write("    </TABLE>     \r\n");
+      out.write("    </table>    \r\n");
+      out.write("    <table class=\"ui celled table\">  \r\n");
       out.write("\r\n");
-      out.write("    <TABLE border='0' width='600' cellpadding='0' cellspacing='0'>\r\n");
-      out.write("        <TR>\r\n");
-      out.write("            <TD><hr size='1' noshade>\r\n");
-      out.write("            </TD>\r\n");
-      out.write("        </TR>\r\n");
-      out.write("    </TABLE>                    \r\n");
-      out.write("\r\n");
-      out.write("    ");
+      out.write("        <tfoot>\r\n");
+      out.write("            <tr><th colspan=\"3\">\r\n");
+      out.write("                    <div class=\"ui right floated pagination menu\">\r\n");
+      out.write("                        ");
 
-        }
+                            }
 
-        if (paging.getStartPage() > 5) {
-    
+                            if (paging.getStartPage() > 5) {
+                        
       out.write("\r\n");
-      out.write("    <a href=\"./listboard.jsp?pageNum=");
+      out.write("                        <a class=\"icon item\" href=\"./listboard.jsp?pageNum=");
       out.print(paging.getStartPage() - 5);
       out.write("\">[이전]</a>\t\r\n");
-      out.write("    ");
+      out.write("                        ");
 
-        }
-        while (paging.getStartPage() <= paging.getEndPage()) {
-    
+                            }
+                            while (paging.getStartPage() <= paging.getEndPage()) {
+                        
       out.write("\r\n");
-      out.write("    <a href=\"./listboard.jsp?pageNum=");
+      out.write("                        <a class=\"item\" href=\"./listboard.jsp?pageNum=");
       out.print(paging.getStartPage());
-      out.write("\">[");
+      out.write('"');
+      out.write('>');
       out.print(paging.getStartPage());
-      out.write("]</a>\r\n");
-      out.write("    ");
+      out.write("</a>\r\n");
+      out.write("                        ");
 
 
-            paging.setStartPage(paging.getStartPage() + 1);
-        }
-        if (paging.getEndPage() < paging.getTotalPages()) {
-    
+                                paging.setStartPage(paging.getStartPage() + 1);
+                            }
+                            if (paging.getEndPage() < paging.getTotalPages()) {
+                        
       out.write("\r\n");
-      out.write("    <a href=\"./listboard.jsp?pageNum=");
+      out.write("                        <a class=\"icon item\" href=\"./listboard.jsp?pageNum=");
       out.print(paging.getStartPage());
       out.write("\">[다음]</a>\r\n");
-      out.write("    ");
+      out.write("                        ");
 
-        }
-    
+                            }
+                        
       out.write("  \r\n");
-      out.write("    <TABLE border='0' width='600' cellpadding='0' cellspacing='0'>\r\n");
-      out.write("        <TR>\r\n");
-      out.write("            <TD><hr size='1' noshade>\r\n");
-      out.write("            </TD>\r\n");
-      out.write("        </TR>\r\n");
-      out.write("    </TABLE>                    \r\n");
+      out.write("                    </div>\r\n");
+      out.write("                </th>\r\n");
+      out.write("            </tr></tfoot>\r\n");
+      out.write("    </table>\r\n");
+      out.write("\r\n");
       out.write("\r\n");
       out.write("    <TABLE border=0 width=600>\r\n");
       out.write("        <TR>\r\n");
       out.write("            <TD align='center'>\t\r\n");
       out.write("                <TABLE border='0' cellpadding='0' cellspacing='0'>\r\n");
+      out.write("\r\n");
       out.write("                    <FORM Name='Form' Method='POST' Action='listboard.jsp' method = 'post' OnSubmit='return Check()'>\r\n");
+      out.write("                        \r\n");
       out.write("                        <input type='hidden' name='search' value='1'>\r\n");
-      out.write("                        <TR>\r\n");
-      out.write("                            <TD align='right'>\r\n");
-      out.write("                                <select name='key' style=\"background-color:cccccc;\">\r\n");
-      out.write("                                    <option value='title' selected><font size='2'>\r\n");
-      out.write("                                    글제목</font></option>\r\n");
-      out.write("                                    <option value='contents'><font size='2'>\r\n");
-      out.write("                                    글내용</font></option>\r\n");
-      out.write("                                    <option value='name'><font size='2'>\r\n");
-      out.write("                                    작성자</font></option>\r\n");
-      out.write("                                </select>\r\n");
-      out.write("                            </TD>\r\n");
-      out.write("                            <TD align='left'>\r\n");
-      out.write("                                <input type='text' name='keyword' \r\n");
-      out.write("                                       value='' size='20' maxlength='30'>\r\n");
-      out.write("                                <input type='submit' value='검색'>\r\n");
-      out.write("                            </td>\r\n");
-      out.write("                        </TR>\r\n");
+      out.write("                        \r\n");
+      out.write("                        <div class=\"ui action input\">\r\n");
+      out.write("                            <input type='text' placeholder=\"Search...\" name='keyword' size='20' maxlength='30'>\r\n");
+      out.write("                            <select name=\"key\" class=\"ui compact selection dropdown\">\r\n");
+      out.write("                                <option value='title' selected>글제목</option>\r\n");
+      out.write("                                <option value='contents'>글내용</option>\r\n");
+      out.write("                                <option value='name'>작성자</option>\r\n");
+      out.write("                            </select>\r\n");
+      out.write("                            <button type=\"submit\" class=\"ui button\"/>Search</button>\r\n");
+      out.write("                        </div>\r\n");
       out.write("                    </FORM>\r\n");
       out.write("                </TABLE> \r\n");
       out.write("            </TD>\r\n");
-      out.write("\r\n");
       out.write("            <TD align='right'>\t\t\r\n");
-      out.write("                <a href='./write.jsp'>[등록]</a>\t\t\t\t\r\n");
+      out.write("                <button class=\"ui button\" onclick='boardWrite(");
+      out.print(pageNum);
+      out.write(")'>등록</button>\r\n");
       out.write("            </TD>\r\n");
       out.write("        </TR>\r\n");
       out.write("    </TABLE>  \r\n");
