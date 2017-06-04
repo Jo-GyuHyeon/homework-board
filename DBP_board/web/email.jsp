@@ -1,13 +1,13 @@
 <%@page import="dao.ArticleDaoFactory"%>
 <%@page import="dao.ArticleDao"%>
 <%@page import="bean.Article"%>
-<%@ page language="java" contentType="text/html; charset=euc-kr" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page import = "java.sql.*, java.util.*" %>
-<% request.setCharacterEncoding("euc-kr"); %>
+<% request.setCharacterEncoding("UTF-8"); %>
 
 <HTML>
 <HEAD>
-<TITLE> °Ô½ÃÆÇ </TITLE>
+<TITLE> ê²Œì‹œíŒ </TITLE>
 
 <SCRIPT language="JavaScript">
 <SCRIPT language="JavaScript">
@@ -17,19 +17,19 @@ if (email.toemail.value.indexOf("@") + "" == "-1" ||
 	email.toemail.value.indexOf(".") + "" == "-1" ||
 	email.toemail.value == "" )
 	{ 
-		alert("E-mailÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
+		alert("E-mailì„ ì…ë ¥í•˜ì„¸ìš”.");
 		email.toemail.focus();
 		return false;
 	}
 
 if (email.title.value.length < 1) {
-	alert("±ÛÁ¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
+	alert("ê¸€ì œëª©ì„ ì…ë ¥í•˜ì„¸ìš”.");
 	email.title.focus(); 
 	return false;
         }
 
 if (email.contents.value.length < 1) {
-	alert("±Û³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
+	alert("ê¸€ë‚´ìš©ì„ ì…ë ¥í•˜ì„¸ìš”.");
 	email.contents.focus(); 
 	return false;
         }
@@ -54,7 +54,7 @@ ArticleDao dao = new ArticleDaoFactory().modelDao();
 String email = dao.getMailInfo(num);
 %>
                    
-<center><font size='3'><b> ÀÌ¸ŞÀÏ ¹ß¼ÛÇÏ±â </b></font>                  
+<center><font size='3'><b> ì´ë©”ì¼ ë°œì†¡í•˜ê¸° </b></font>                  
 
 <TABLE border='0' width='600' cellpadding='0' cellspacing='0'>
 	<TR>
@@ -69,19 +69,19 @@ String email = dao.getMailInfo(num);
 <TABLE border='0' width='600'>
 	<TR>
 		<TD width='100' bgcolor='cccccc'>
-			<font size='2'><center><b>º¸³»´ÂÀÌ</b></center></font> 
+			<font size='2'><center><b>ë³´ë‚´ëŠ”ì´</b></center></font> 
 		</TD>
 		<TD>
-			<p><input type='text' size='12' name='fromemail'> * ÇÊ¼ö </p>
+			<p><input type='text' size='12' name='fromemail'> * í•„ìˆ˜ </p>
 		</TD>
 	</TR>
 
 	<TR>
 		<TD width='100' bgcolor='cccccc'>
-			<font size='2'><center><b>¹Ş´ÂÀÌ</b></center></font>
+			<font size='2'><center><b>ë°›ëŠ”ì´</b></center></font>
 		</TD>
 		<TD>
-			<p><input type='text' size='12' name='toemail' value="<%=email %>"> * ÇÊ¼ö </p>
+			<p><input type='text' size='12' name='toemail' value="<%=email %>"> * í•„ìˆ˜ </p>
 		</TD>
 	</TR>
 
@@ -93,7 +93,7 @@ String email = dao.getMailInfo(num);
 
 	<TR>
 		<TD width='100' bgcolor='cccccc'>
-			<font size='2'><center><b>¸ŞÀÏ Á¦¸ñ</b></center></font>
+			<font size='2'><center><b>ë©”ì¼ ì œëª©</b></center></font>
 		</TD>
 		<TD>
 			<font size='2'><input type='text' size='70' maxlength='50' name='title'></font>
@@ -102,7 +102,7 @@ String email = dao.getMailInfo(num);
 
 	<TR>
 		<TD bgcolor='cccccc'>
-			<font size='2'><center><b>¸ŞÀÏ ³»¿ë</b></center></font>
+			<font size='2'><center><b>ë©”ì¼ ë‚´ìš©</b></center></font>
 		</TD>
 		<TD>
          		<font size='2'>
@@ -120,13 +120,13 @@ String email = dao.getMailInfo(num);
 		<TABLE>
 			<TR>
 				<TD width='200' align='center'>
-					<input Type = 'Reset' Value = '´Ù½Ã ÀÛ¼º'>
+					<input Type = 'Reset' Value = 'ë‹¤ì‹œ ì‘ì„±'>
 				</TD>
 				<TD width='200' align='center'>
-					<input Type = 'Submit' Value = 'ÀÌ¸ŞÀÏÀü¼Û'>
+					<input Type = 'Submit' Value = 'ì´ë©”ì¼ì „ì†¡'>
 				</TD>
 				<TD width='200' align='center'>
-					<input Type = 'Button' Value = '¸ñ·Ï' Name='Page' onClick='list();'>
+					<input Type = 'Button' Value = 'ëª©ë¡' Name='Page' onClick='list();'>
 				</TD>
 			</TR>
 		</TABLE>

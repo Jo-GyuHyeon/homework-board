@@ -1,25 +1,25 @@
 <%@page import="bean.Model"%>
 <%@page import="dao.*"%>
-<%@ page language="java" contentType="text/html; charset=euc-kr" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page import = " java.util.*" %>
-<% request.setCharacterEncoding("euc-kr"); %>
+<% request.setCharacterEncoding("UTF-8"); %>
 
 
 <HTML>
     <HEAD>
-        <TITLE> ∞‘Ω√∆« </TITLE>
+        <TITLE> Í≤åÏãúÌåê </TITLE>
 
         <SCRIPT language="JavaScript">
             function Check()
             {
                 if (Modify.name.value.length < 1) {
-                    alert("¿€º∫¿⁄∏¶ ¿‘∑¬«œººø‰.");
+                    alert("ÏûëÏÑ±ÏûêÎ•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî.");
                     Modify.name.focus();
                     return false;
                 }
 
                 if (Modify.pass.value.length < 1) {
-                    alert("∫Òπ–π¯»£∏¶ ¿‘∑¬«œººø‰.");
+                    alert("ÎπÑÎ∞ÄÎ≤àÌò∏Î•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî.");
                     Modify.pass.focus();
                     return false;
                 }
@@ -28,19 +28,19 @@
                         Modify.email.value.indexOf(".") + "" == "-1" ||
                         Modify.email.value == "")
                 {
-                    alert("E-mail¿ª ¿‘∑¬«œººø‰.");
+                    alert("E-mailÏùÑ ÏûÖÎ†•ÌïòÏÑ∏Ïöî.");
                     Modify.email.focus();
                     return false;
                 }
 
                 if (Modify.title.value.length < 1) {
-                    alert("±€¡¶∏Ò¿ª ¿‘∑¬«œººø‰.");
+                    alert("Í∏ÄÏ†úÎ™©ÏùÑ ÏûÖÎ†•ÌïòÏÑ∏Ïöî.");
                     Modify.title.focus();
                     return false;
                 }
 
                 if (Modify.contents.value.length < 1) {
-                    alert("±€≥ªøÎ¿ª ¿‘∑¬«œººø‰.");
+                    alert("Í∏ÄÎÇ¥Ïö©ÏùÑ ÏûÖÎ†•ÌïòÏÑ∏Ïöî.");
                     Modify.contents.focus();
                     return false;
                 }
@@ -66,7 +66,7 @@
 
         %>
 
-    <center><font size='3'><b> ¥‰∫Ø«œ±‚ </b></font>                  
+    <center><font size='3'><b> ÎãµÎ≥ÄÌïòÍ∏∞ </b></font>                  
 
         <TABLE border='0' width='600' cellpadding='0' cellspacing='0'>
             <TR>
@@ -81,19 +81,19 @@
             <TABLE border='0' width='600'>
                 <TR>
                     <TD width='100' bgcolor='cccccc'>
-                <font size='2'><center><b>¿€º∫¿⁄</b></center></font> 
+                <font size='2'><center><b>ÏûëÏÑ±Ïûê</b></center></font> 
                 </TD>
                 <TD>
-                    <p><input type='text' size='12' name='name' value=""> * « ºˆ </p>
+                    <p><input type='text' size='12' name='name' value=""> * ÌïÑÏàò </p>
                 </TD>
                 </TR>
 
                 <TR>
                     <TD width='100' bgcolor='cccccc'>
-                <font size='2'><center><b>∫Òπ–π¯»£</b></center></font>
+                <font size='2'><center><b>ÎπÑÎ∞ÄÎ≤àÌò∏</b></center></font>
                 </TD>
                 <TD>
-                    <p><input type='password' size='12' name='pass'> * « ºˆ </p>
+                    <p><input type='password' size='12' name='pass'> * ÌïÑÏàò </p>
                 </TD>
                 </TR>
 
@@ -114,16 +114,16 @@
 
                 <TR>
                     <TD width='100' bgcolor='cccccc'>
-                <font size='2'><center><b>±€ ¡¶∏Ò</b></center></font>
+                <font size='2'><center><b>Í∏Ä Ï†úÎ™©</b></center></font>
                 </TD>
                 <TD>
-                    <font size='2'><input type='text' size='70' maxlength='50' name='title' value="[¥‰∫Ø]<%=title%>"></font>
+                    <font size='2'><input type='text' size='70' maxlength='50' name='title' value="[ÎãµÎ≥Ä]<%=title%>"></font>
                 </TD>
                 </TR>
 
                 <TR>
                     <TD bgcolor='cccccc'>
-                <font size='2'><center><b>±€ ≥ªøÎ</b></center></font>
+                <font size='2'><center><b>Í∏Ä ÎÇ¥Ïö©</b></center></font>
                 </TD>
                 <TD>
                     <font size='2'>
@@ -141,13 +141,13 @@
                         <TABLE>
                             <TR>
                                 <TD width='200' align='center'>
-                                    <input Type = 'Reset' Value = '¥ŸΩ√ ¿€º∫'>
+                                    <input Type = 'Reset' Value = 'Îã§Ïãú ÏûëÏÑ±'>
                                 </TD>
                                 <TD width='200' align='center'>
-                                    <input Type = 'Submit' Value = 'øœ∑·'>
+                                    <input Type = 'Submit' Value = 'ÏôÑÎ£å'>
                                 </TD>
                                 <TD width='200' align='center'>
-                                    <input Type = 'Button' Value = '∏Ò∑œ' Name='Page' onClick='list();'>
+                                    <input Type = 'Button' Value = 'Î™©Î°ù' Name='Page' onClick='list();'>
                                 </TD>
                             </TR>
                         </TABLE>

@@ -9,6 +9,7 @@
         <TITLE> 게시판 </TITLE>
 
         <SCRIPT language="JavaScript">
+
             function Check()
             {
                 if (Modify.name.value.length < 1) {
@@ -44,11 +45,14 @@
                     return false;
                 }
             }
-
-            function list()
+            function retunList(pageNum)
             {
-                location.href = "./listboard.jsp";
+
+                alert(pageNum);
+                location.href = "./listboard.jsp?pageNum=" + pageNum;
             }
+
+
 
         </SCRIPT>
     </HEAD>
@@ -65,8 +69,8 @@
             String email = model.getEmail();
             String title = model.getTitle();
             String contents = model.getContents().trim();
-            String writedate = model.getWritedate();
-            int readcount = model.getReadcount();
+            Paging paging = new Paging();
+            String pageNum = paging.getPageNum(num);
         %>
 
     <center><font size='3'><b> 게시판 글수정 </b></font>                  
@@ -150,7 +154,7 @@
                                     <input Type = 'Submit' Value = '수정완료'>
                                 </TD>
                                 <TD width='200' align='center'>
-                                    <input Type = 'Button' Value = '목록' Name='Page' onClick='list();'>
+                                    <input Type = 'Button' Value = '목록' Name='Page' onClick='retunList(<%=pageNum%>);'>
                                 </TD>
                             </TR>
                         </TABLE>

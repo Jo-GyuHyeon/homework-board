@@ -5,6 +5,10 @@
  */
 package bean;
 
+import dao.*;
+import java.sql.SQLException;
+
+
 /**
  *
  * @author jo
@@ -17,6 +21,10 @@ public class Paging {
     private int startPage;
     private int endPage;
     private int pageSize;
+    private String pageNum;
+    private int listSize = 10;
+    private  ArticleDao dao;
+    private int lastRow;
 
     public Paging(int total, int currentPage, int size, int pageSize) {
         this.total = total;
@@ -42,6 +50,7 @@ public class Paging {
             }
         }
     }
+    public Paging(){}
     public int getTotal() {return total;}
     public boolean hasNoArticles() {return total == 0;}
     public boolean hasArticles() {return total > 0;}
@@ -50,4 +59,11 @@ public class Paging {
     public int getStartPage() {return startPage;}
     public int getEndPage() {return endPage;}
     public void setStartPage(int startPage){this.startPage = startPage;}
+    public String getPageNum(String num) throws ClassNotFoundException, SQLException{
+        this.dao = new ArticleDaoFactory().modelDao(); 
+        lastRow= dao.getLastRow();
+        pageNum = ((lastRow - Integer.parseInt(num)) / listSize) + 1 + "";
+        return pageNum;
+    }
 }
+

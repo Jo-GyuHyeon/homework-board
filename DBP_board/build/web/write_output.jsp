@@ -33,9 +33,8 @@
             int readcount = model.getReadcount();
             String filename = model.getFilename();
 
-            int lastRow = dao.getLastRow();
-            int listSize = 10;
-            String pageNum = ((lastRow - Integer.parseInt(num)) / listSize) + 1 + "";
+            Paging paging = new Paging();
+            String pageNum = paging.getPageNum(num);
         %>
 
     <center><font size='3'><b> 게시판 </b></font>

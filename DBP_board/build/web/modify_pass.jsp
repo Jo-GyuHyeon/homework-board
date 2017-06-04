@@ -1,3 +1,7 @@
+<%@page import="bean.Paging"%>
+<%@page import="dao.ArticleDaoFactory"%>
+<%@page import="dao.ArticleDao"%>
+<%@page import="dao.ArticleDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 
@@ -18,6 +22,8 @@
 
         <%
             String num = request.getParameter("num");
+            Paging paging = new Paging();
+            String pageNum = paging.getPageNum(num);
         %>
 
     <center><font size='3'><b>비밀번호 확인</b></font>                                                
@@ -51,7 +57,7 @@
                 </TR>
             </TABLE>                    
 
-            <a href='./listboard.jsp'>[목록 보기]</a>    
+               <a href="./listboard.jsp?pageNum=<%=pageNum%>">[목록보기]</a> 
 
         </FORM>
 

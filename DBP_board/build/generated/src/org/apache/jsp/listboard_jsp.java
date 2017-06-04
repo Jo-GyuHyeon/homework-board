@@ -184,17 +184,6 @@ public final class listboard_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        </TR>\r\n");
       out.write("    </TABLE>                    \r\n");
       out.write("\r\n");
-      out.write("    <TABLE border=0 width=600>\r\n");
-      out.write("        <TR>\r\n");
-      out.write("            <TD align=left>\t\t\r\n");
-      out.write("            </TD>\r\n");
-      out.write("\r\n");
-      out.write("            <TD align='right'>\t\t\r\n");
-      out.write("                <a href='./write.jsp'>[등록]</a>\t\t\t\t\r\n");
-      out.write("            </TD>\r\n");
-      out.write("        </TR>\r\n");
-      out.write("    </TABLE>\r\n");
-      out.write("\r\n");
       out.write("    ");
 
         }

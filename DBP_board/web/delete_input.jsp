@@ -12,7 +12,7 @@
 
     ArticleDao dao = new ArticleDaoFactory().modelDao();
     String goodpass = dao.getPass(num).trim();
-    //String goodpass = rs.getString("pass").trim();
+
 
     if (pass.equals(goodpass)) {
         dao.delete(num);
