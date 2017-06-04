@@ -42,17 +42,17 @@ public class ArticleDao {
         ps.setInt(2, endRow);
         rs = ps.executeQuery();
         while (rs.next()) {
-            Article model = new Article();
-            model.setNum(rs.getInt("num"));
-            model.setName(rs.getString("name"));
-            model.setPass(rs.getString("pass"));
-            model.setEmail(rs.getString("email"));
-            model.setTitle(rs.getString("title"));
-            model.setContents(rs.getString("contents"));
-            model.setWritedate(rs.getString("writedate"));
-            model.setReadcount(rs.getInt("readcount"));
-            model.setFilename(rs.getString("filename"));
-            list.add(model);
+            Article ariticle = new Article();
+            ariticle.setNum(rs.getInt("num"));
+            ariticle.setName(rs.getString("name"));
+            ariticle.setPass(rs.getString("pass"));
+            ariticle.setEmail(rs.getString("email"));
+            ariticle.setTitle(rs.getString("title"));
+            ariticle.setContents(rs.getString("contents"));
+            ariticle.setWritedate(rs.getString("writedate"));
+            ariticle.setReadcount(rs.getInt("readcount"));
+            ariticle.setFilename(rs.getString("filename"));
+            list.add(ariticle);
         }
         rs.close();
         ps.close();
@@ -69,17 +69,17 @@ public class ArticleDao {
         ps.setString(1, "%" + keyword + "%");
         rs = ps.executeQuery();
         while (rs.next()) {
-            Article model = new Article();
-            model.setNum(rs.getInt("num"));
-            model.setName(rs.getString("name"));
-            model.setPass(rs.getString("pass"));
-            model.setEmail(rs.getString("email"));
-            model.setTitle(rs.getString("title"));
-            model.setContents(rs.getString("contents"));
-            model.setWritedate(rs.getString("writedate"));
-            model.setReadcount(rs.getInt("readcount"));
-            model.setFilename(rs.getString("filename"));
-            list.add(model);
+            Article ariticle = new Article();
+            ariticle.setNum(rs.getInt("num"));
+            ariticle.setName(rs.getString("name"));
+            ariticle.setPass(rs.getString("pass"));
+            ariticle.setEmail(rs.getString("email"));
+            ariticle.setTitle(rs.getString("title"));
+            ariticle.setContents(rs.getString("contents"));
+            ariticle.setWritedate(rs.getString("writedate"));
+            ariticle.setReadcount(rs.getInt("readcount"));
+            ariticle.setFilename(rs.getString("filename"));
+            list.add(ariticle);
         }
         rs.close();
         ps.close();
@@ -103,17 +103,17 @@ public class ArticleDao {
         }
         rs = ps.executeQuery();
         while (rs.next()) {
-            Article model = new Article();
-            model.setNum(rs.getInt("num"));
-            model.setName(rs.getString("name"));
-            model.setPass(rs.getString("pass"));
-            model.setEmail(rs.getString("email"));
-            model.setTitle(rs.getString("title"));
-            model.setContents(rs.getString("contents"));
-            model.setWritedate(rs.getString("writedate"));
-            model.setReadcount(rs.getInt("readcount"));
-            model.setFilename(rs.getString("filename"));
-            list.add(model);
+            Article ariticle = new Article();
+            ariticle.setNum(rs.getInt("num"));
+            ariticle.setName(rs.getString("name"));
+            ariticle.setPass(rs.getString("pass"));
+            ariticle.setEmail(rs.getString("email"));
+            ariticle.setTitle(rs.getString("title"));
+            ariticle.setContents(rs.getString("contents"));
+            ariticle.setWritedate(rs.getString("writedate"));
+            ariticle.setReadcount(rs.getInt("readcount"));
+            ariticle.setFilename(rs.getString("filename"));
+            list.add(ariticle);
         }
         rs.close();
         ps.close();
@@ -182,7 +182,7 @@ public class ArticleDao {
         return num;
     }
 
-    public void write(Article model) throws ClassNotFoundException, SQLException {
+    public void write(Article ariticle) throws ClassNotFoundException, SQLException {
 
         Calendar dateIn = Calendar.getInstance();
         String indate = Integer.toString(dateIn.get(Calendar.YEAR)) + "-";
@@ -208,14 +208,14 @@ public class ArticleDao {
 
         ps = c.prepareStatement(strSQL);
         ps.setInt(1, num);
-        ps.setString(2, model.getName());
-        ps.setString(3, model.getPass());
-        ps.setString(4, model.getEmail());
-        ps.setString(5, model.getTitle());
-        ps.setString(6, model.getContents());
+        ps.setString(2, ariticle.getName());
+        ps.setString(3, ariticle.getPass());
+        ps.setString(4, ariticle.getEmail());
+        ps.setString(5, ariticle.getTitle());
+        ps.setString(6, ariticle.getContents());
         ps.setString(7, indate);
         ps.setInt(8, 0);
-        ps.setString(9, model.getFilename());
+        ps.setString(9, ariticle.getFilename());
 
         ps.executeUpdate();
 
@@ -223,7 +223,7 @@ public class ArticleDao {
         c.close();
     }
 
-    public void reply(Article model) throws ClassNotFoundException, SQLException {
+    public void reply(Article ariticle) throws ClassNotFoundException, SQLException {
 
         Calendar dateIn = Calendar.getInstance();
         String indate = Integer.toString(dateIn.get(Calendar.YEAR)) + "-";
@@ -235,8 +235,8 @@ public class ArticleDao {
 
         c = this.connectionMaker.makeConnection();
 
-        strSQL = "UPDATE tblboard SET num = num + 1 WHERE num = " + model.getNum() + " OR num > " + model.getNum();
-        System.out.print(model.getNum());
+        strSQL = "UPDATE tblboard SET num = num + 1 WHERE num = " + ariticle.getNum() + " OR num > " + ariticle.getNum();
+        System.out.print(ariticle.getNum());
         pstmt1 = c.prepareStatement(strSQL);
         pstmt1.executeUpdate();
 
@@ -244,15 +244,15 @@ public class ArticleDao {
         strSQL = strSQL + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
         pstmt2 = c.prepareStatement(strSQL);
-        pstmt2.setInt(1, model.getNum());
-        pstmt2.setString(2, model.getName());
-        pstmt2.setString(3, model.getPass());
-        pstmt2.setString(4, model.getEmail());
-        pstmt2.setString(5, model.getTitle());
-        pstmt2.setString(6, model.getContents());
+        pstmt2.setInt(1, ariticle.getNum());
+        pstmt2.setString(2, ariticle.getName());
+        pstmt2.setString(3, ariticle.getPass());
+        pstmt2.setString(4, ariticle.getEmail());
+        pstmt2.setString(5, ariticle.getTitle());
+        pstmt2.setString(6, ariticle.getContents());
         pstmt2.setString(7, indate);
         pstmt2.setInt(8, 0);
-        pstmt2.setString(9, model.getFilename());
+        pstmt2.setString(9, ariticle.getFilename());
         pstmt2.executeUpdate();
         pstmt1.close();
         pstmt2.close();
@@ -260,7 +260,7 @@ public class ArticleDao {
     }
    
 
-    public void update(Article model) throws ClassNotFoundException, SQLException {
+    public void update(Article ariticle) throws ClassNotFoundException, SQLException {
         strSQL = "UPDATE tblboard SET name=?, pass=?, email=?, title=?, contents=?, writedate=? WHERE num=?";
         Calendar dateIn = Calendar.getInstance();
         String indate = Integer.toString(dateIn.get(Calendar.YEAR)) + "-";
@@ -272,40 +272,40 @@ public class ArticleDao {
 
         c = this.connectionMaker.makeConnection();
         ps = c.prepareStatement(strSQL);
-        ps.setString(1, model.getName());
-        ps.setString(2, model.getPass());
-        ps.setString(3, model.getEmail());
-        ps.setString(4, model.getTitle());
-        ps.setString(5, model.getContents());
+        ps.setString(1, ariticle.getName());
+        ps.setString(2, ariticle.getPass());
+        ps.setString(3, ariticle.getEmail());
+        ps.setString(4, ariticle.getTitle());
+        ps.setString(5, ariticle.getContents());
         ps.setString(6, indate);
-        ps.setInt(7, model.getNum());
+        ps.setInt(7, ariticle.getNum());
         ps.executeUpdate();
 
         ps.close();
         c.close();
     }
 
-    public Article getModel(String num) throws ClassNotFoundException, SQLException {
+    public Article getArticle(String num) throws ClassNotFoundException, SQLException {
         strSQL = "SELECT * FROM tblboard WHERE num = ?";
         c = this.connectionMaker.makeConnection();
         ps = c.prepareStatement(strSQL);
         ps.setInt(1, Integer.parseInt(num));
         rs = ps.executeQuery();
         rs.next();
-        Article model = new Article();
-        model.setNum(rs.getInt("num"));
-        model.setName(rs.getString("name"));
-        model.setPass(rs.getString("pass"));
-        model.setEmail(rs.getString("email"));
-        model.setTitle(rs.getString("title"));
-        model.setContents(rs.getString("contents"));
-        model.setWritedate(rs.getString("writedate"));
-        model.setReadcount(rs.getInt("readcount"));
-        model.setFilename(rs.getString("filename"));
+        Article ariticle = new Article();
+        ariticle.setNum(rs.getInt("num"));
+        ariticle.setName(rs.getString("name"));
+        ariticle.setPass(rs.getString("pass"));
+        ariticle.setEmail(rs.getString("email"));
+        ariticle.setTitle(rs.getString("title"));
+        ariticle.setContents(rs.getString("contents"));
+        ariticle.setWritedate(rs.getString("writedate"));
+        ariticle.setReadcount(rs.getInt("readcount"));
+        ariticle.setFilename(rs.getString("filename"));
         rs.close();
         ps.close();
         c.close();
-        return model;
+        return ariticle;
     }
 
     public void update_readcount(String num) throws ClassNotFoundException, SQLException {

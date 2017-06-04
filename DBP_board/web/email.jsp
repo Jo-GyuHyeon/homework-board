@@ -1,6 +1,5 @@
-<%@page import="dao.ArticleDaoFactory"%>
-<%@page import="dao.ArticleDao"%>
-<%@page import="bean.Article"%>
+<%@page import="dao.*"%>
+<%@page import="bean.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page import = "java.sql.*, java.util.*" %>
 <% request.setCharacterEncoding("UTF-8"); %>
@@ -50,7 +49,7 @@ location.href = "listboard.jsp";
 
 <%
 String num = request.getParameter("num"); 
-ArticleDao dao = new ArticleDaoFactory().modelDao();
+ArticleDao dao = new ArticleDaoFactory().articleDao();
 String email = dao.getMailInfo(num);
 %>
                    

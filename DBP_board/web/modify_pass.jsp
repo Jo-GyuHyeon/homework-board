@@ -1,7 +1,5 @@
-<%@page import="bean.Paging"%>
-<%@page import="dao.ArticleDaoFactory"%>
-<%@page import="dao.ArticleDao"%>
-<%@page import="dao.ArticleDao"%>
+<%@page import="bean.*"%>
+<%@page import="dao.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 

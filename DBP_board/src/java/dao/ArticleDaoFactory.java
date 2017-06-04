@@ -3,7 +3,7 @@ package dao;
 public class ArticleDaoFactory {
 	public  ArticleDaoFactory() {
 	}
-	public ArticleDao modelDao() {
+	public ArticleDao articleDao() {
 		ArticleDao dao = new ArticleDao(connectionMaker());
 		return dao;
 	}

@@ -8,7 +8,7 @@
     String num = request.getParameter("num");
     String pass = request.getParameter("pass");
 
-    ArticleDao dao = new ArticleDaoFactory().modelDao();
+    ArticleDao dao = new ArticleDaoFactory().articleDao();
     String goodpass = dao.getPass(num).trim();
 
     if (pass.equals(goodpass)) {

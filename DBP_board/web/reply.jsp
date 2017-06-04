@@ -1,4 +1,4 @@
-<%@page import="bean.Model"%>
+<%@page import="bean.*"%>
 <%@page import="dao.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page import = " java.util.*" %>
@@ -47,9 +47,11 @@
 
             }
 
-            function list()
+            function retunList(pageNum)
             {
-                location.href = "./listboard.asp";
+
+                //  alert(pageNum);
+                location.href = "./listboard.jsp?pageNum=" + pageNum;
             }
 
         </SCRIPT>
@@ -60,9 +62,11 @@
         <%
             String num = request.getParameter("num");
 
-            ArticleDao dao = new ArticleDaoFactory().modelDao();
-            Model model = dao.getModel(num);
-            String title = model.getTitle();
+            ArticleDao dao = new ArticleDaoFactory().articleDao();
+            Paging paging = new Paging();
+            String pageNum = paging.getPageNum(num);
+            Article article = dao.getArticle(num);
+            String title = article.getTitle();
 
         %>
 
@@ -147,7 +151,7 @@
                                     <input Type = 'Submit' Value = '완료'>
                                 </TD>
                                 <TD width='200' align='center'>
-                                    <input Type = 'Button' Value = '목록' Name='Page' onClick='list();'>
+                                    <input Type = 'Button' Value = '목록' Name='Page' onClick='retunList(<%=pageNum%>);'>
                                 </TD>
                             </TR>
                         </TABLE>

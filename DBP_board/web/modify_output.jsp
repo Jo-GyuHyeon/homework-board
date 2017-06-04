@@ -13,17 +13,17 @@ String title = request.getParameter("title");
 String contents = request.getParameter("contents");
 
 
-Article model = new Article();
-ArticleDao dao = new ArticleDaoFactory().modelDao();
+Article ariticle = new Article();
+ArticleDao dao = new ArticleDaoFactory().articleDao();
 
-model.setName(name);
-model.setPass(pass);
-model.setEmail(email);
-model.setTitle(title);
-model.setContents(contents);
-model.setNum(num);
+ariticle.setName(name);
+ariticle.setPass(pass);
+ariticle.setEmail(email);
+ariticle.setTitle(title);
+ariticle.setContents(contents);
+ariticle.setNum(num);
 
-dao.update(model);
+dao.update(ariticle);
 
 response.sendRedirect("./listboard.jsp");
 %>

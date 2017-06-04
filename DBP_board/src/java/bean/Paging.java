@@ -60,7 +60,7 @@ public class Paging {
     public int getEndPage() {return endPage;}
     public void setStartPage(int startPage){this.startPage = startPage;}
     public String getPageNum(String num) throws ClassNotFoundException, SQLException{
-        this.dao = new ArticleDaoFactory().modelDao(); 
+        this.dao = new ArticleDaoFactory().articleDao(); 
         lastRow= dao.getLastRow();
         pageNum = ((lastRow - Integer.parseInt(num)) / listSize) + 1 + "";
         return pageNum;

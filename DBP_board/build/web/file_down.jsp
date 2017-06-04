@@ -1,10 +1,9 @@
 <%@page import="java.io.*"%>
-<%@page import="dao.ArticleDaoFactory"%>
-<%@page import="dao.ArticleDao"%>
+<%@page import="dao.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     String num = request.getParameter("num");
-    ArticleDao dao = new ArticleDaoFactory().modelDao();
+    ArticleDao dao = new ArticleDaoFactory().articleDao();
     String filename = dao.getFilename(num);
     String filename2 = new String(filename.getBytes("KSC5601"), "8859_1");
     String rootPath = request.getSession().getServletContext().getRealPath("/");

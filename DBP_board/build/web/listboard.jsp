@@ -46,7 +46,7 @@
             int currentPage = Integer.parseInt(pageNum);
             int lastRow = 0;
             List list = null;
-            ArticleDao dao = new ArticleDaoFactory().modelDao();
+            ArticleDao dao = new ArticleDaoFactory().articleDao();
             lastRow = dao.getSelectLastRow(key, keyword);
             int endRow = lastRow - ((Integer.parseInt(pageNum) - 1) * listSize);
             int startRow = endRow - (listSize - 1);

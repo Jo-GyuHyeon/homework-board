@@ -24,14 +24,14 @@
         <%
             String num = request.getParameter("num");
 
-            ArticleDao dao = new ArticleDaoFactory().modelDao();
-            Article model = dao.getModel(num);
-            String name = model.getName();
-            String title = model.getTitle();
-            String contents = model.getContents().trim();
-            String writedate = model.getWritedate();
-            int readcount = model.getReadcount();
-            String filename = model.getFilename();
+            ArticleDao dao = new ArticleDaoFactory().articleDao();
+            Article ariticle = dao.getArticle(num);
+            String name = ariticle.getName();
+            String title = ariticle.getTitle();
+            String contents = ariticle.getContents().trim();
+            String writedate = ariticle.getWritedate();
+            int readcount = ariticle.getReadcount();
+            String filename = ariticle.getFilename();
 
             Paging paging = new Paging();
             String pageNum = paging.getPageNum(num);

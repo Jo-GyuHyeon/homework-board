@@ -48,7 +48,7 @@
             function retunList(pageNum)
             {
 
-                alert(pageNum);
+              //  alert(pageNum);
                 location.href = "./listboard.jsp?pageNum=" + pageNum;
             }
 
@@ -62,13 +62,13 @@
         <%
             String num = request.getParameter("num");
 
-            ArticleDao dao = new ArticleDaoFactory().modelDao();
-            Article model = dao.getModel(num);
+            ArticleDao dao = new ArticleDaoFactory().articleDao();
+            Article ariticle = dao.getArticle(num);
 
-            String name = model.getName();
-            String email = model.getEmail();
-            String title = model.getTitle();
-            String contents = model.getContents().trim();
+            String name = ariticle.getName();
+            String email = ariticle.getEmail();
+            String title = ariticle.getTitle();
+            String contents = ariticle.getContents().trim();
             Paging paging = new Paging();
             String pageNum = paging.getPageNum(num);
         %>
