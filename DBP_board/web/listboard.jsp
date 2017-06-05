@@ -33,7 +33,14 @@
             }
         </SCRIPT>
 
-        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <META http-equiv="Content-Type" content="text/html; charset=euc-kr">
+        <style type='text/css'>
+            <!--
+            a:link		{font-family:"";color:black;text-decoration:none;}
+            a:visited	{font-family:"";color:black;text-decoration:none;}
+            a:hover		{font-family:"";color:black;text-decoration:underline;}
+            -->
+        </style>
 
     </HEAD>
     <BODY>
@@ -53,7 +60,7 @@
             int lastRow = 0;
             List list = null;
             ArticleDao dao = new ArticleDaoFactory().articleDao();
-            lastRow = dao.getLastRow();
+            lastRow = dao.getSelectLastRow(key, keyword);
             int endRow = lastRow - ((Integer.parseInt(pageNum) - 1) * listSize);
             int startRow = endRow - (listSize - 1);
             Paging paging = new Paging(lastRow, Integer.parseInt(pageNum), listSize, pageSize);
@@ -74,7 +81,7 @@
         </thead> 
 
         <%            if (lastRow > 0) {
-                list = dao.getDBAll(startRow, endRow);
+                list = dao.getSelectDBAll(startRow, endRow, key, keyword);
 
                 Iterator it = list.iterator();
                 Article bean;
@@ -140,7 +147,7 @@
             <TD align='center'>	
                 <TABLE border='0' cellpadding='0' cellspacing='0'>
 
-                    <FORM Name='Form' Method='POST' Action='search.jsp' method = 'post' OnSubmit='return Check()'>
+                    <FORM Name='Form' Method='POST' Action='listboard.jsp' method = 'post' OnSubmit='return Check()'>
                         
                         <input type='hidden' name='search' value='1'>
                         
