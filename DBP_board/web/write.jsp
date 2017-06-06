@@ -1,6 +1,4 @@
-<%@page import="bean.*"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" %>
-<HTML>
+﻿<HTML>
     <HEAD>
         <TITLE> 게시판 </TITLE>
 
@@ -41,20 +39,11 @@
                 }
 
             }
-               function retunList(pageNum)
-            {
-
-              //  alert(pageNum);
-                location.href = "./listboard.jsp?pageNum=" + pageNum;
-            }
 
         </SCRIPT>
     </HEAD>
 
     <BODY>
-       <%
-             String pageNum = request.getParameter("pageNum");
-        %>
 
     <center><font size='3'><b> 게시판 글쓰기 </b></font>                   
 
@@ -145,9 +134,6 @@
                                 </TD>
                                 <TD width='200' align='center'>
                                     <input Type = 'Submit' Value = '등록'>
-                                </TD>
-                                  <TD width='200' align='center'>
-                                    <input Type = 'Button' Value = '목록' Name='Page' onClick='retunList(<%=pageNum%>);'>
                                 </TD>
                             </TR>
                         </TABLE>
